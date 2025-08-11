@@ -77,7 +77,7 @@ const verifyEmail = async (req, res) => {
     user.markEmailVerified();
     await user.save();
 
-    res.send({ message: "Email verified successfully" });
+    res.send({ message: "Email verified successfully", user });
   } catch (err) {
     res.status(500).send("Error: " + err.message);
   }
@@ -123,7 +123,9 @@ const login = async (req, res) => {
 
     // Optional: block login until verified
     if (!user.isEmailVerified) {
-      return res.status(403).send({ message: "Please verify your email first" });
+      return res
+        .status(403)
+        .send({ message: "Please verify your email first" });
     }
 
     const match = await user.comparePassword(password);
