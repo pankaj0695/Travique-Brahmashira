@@ -14,6 +14,7 @@ import TripSuggestions from './pages/TripSuggestions';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import Dashboard from './components/Dashboard/dashboard';
+import Blog from './pages/Blog';
 
 function Home() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/blog" element={<Blog />} />
       </Routes>
     </ThemeProvider>
   );
