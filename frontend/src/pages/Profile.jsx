@@ -28,29 +28,85 @@ const Profile = () => {
   // Fetch past trips when user is available
   useEffect(() => {
     if (user?._id) {
-      fetchPastTrips();
+      // fetchPastTrips();
     }
   }, [user]);
 
-  const fetchPastTrips = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(
-        `${backend_url}/api/getPastTrips/${user._id}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setPastTrips(data.trips || []);
-      } else {
-        setError("Failed to fetch past trips");
-      }
-    } catch (err) {
-      setError("Error connecting to server");
-    } finally {
-      setLoading(false);
+  // Dummy content for Past Trip Suggestions
+  useEffect(() => {
+    if (!user?._id) return;
+    // If no trips, set dummy data for demo
+    if (pastTrips.length === 0 && !loading && !error) {
+      setPastTrips([
+        {
+          _id: "dummy1",
+          city: "Paris",
+          checkIn: "2024-05-10",
+          checkOut: "2024-05-15",
+          preference: "Romantic, Culture",
+          budget: 120000,
+          createdAt: "2024-04-20",
+          suggestions: [
+            {
+              title: "Eiffel Tower",
+              description: "Visit the iconic landmark.",
+            },
+            {
+              title: "Louvre Museum",
+              description: "Explore world-class art.",
+            },
+            {
+              title: "Seine River Cruise",
+              description: "Enjoy a scenic boat ride.",
+            },
+          ],
+        },
+        {
+          _id: "dummy2",
+          city: "Tokyo",
+          checkIn: "2024-06-01",
+          checkOut: "2024-06-07",
+          preference: "Food, Technology",
+          budget: 150000,
+          createdAt: "2024-05-10",
+          suggestions: [
+            {
+              title: "Tsukiji Market",
+              description: "Try fresh sushi.",
+            },
+            {
+              title: "Akihabara",
+              description: "Experience tech and anime culture.",
+            },
+            {
+              title: "Shibuya Crossing",
+              description: "See the world's busiest crossing.",
+            },
+          ],
+        },
+      ]);
     }
-  };
+  }, [user, pastTrips.length, loading, error]);
+
+  // const fetchPastTrips = async () => {
+  //   setLoading(true);
+  //   setError(null);
+  //   try {
+  //     const response = await fetch(
+  //       `${backend_url}/api/getPastTrips/${user._id}`
+  //     );
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setPastTrips(data.trips || []);
+  //     } else {
+  //       setError("Failed to fetch past trips");
+  //     }
+  //   } catch (err) {
+  //     setError("Error connecting to server");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleLogout = async () => {
     if (window.confirm("Are you sure you want to logout?")) {
