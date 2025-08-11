@@ -5,19 +5,19 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: var(--text-primary);
-    background: var(--hero-gradient);
+    color: #011D4D; /* Dark Navy Blue */
+    background: linear-gradient(135deg, #E4DFDA 0%, #E4DFDA 50%, #E4DFDA 100%); /* Light Beige gradient */
     overflow: hidden;
-    /* Enhanced background with theme-aware overlays */
+    /* Modern background with custom color overlays */
     background-image:
-        radial-gradient(ellipse at 20% 80%, rgba(56, 189, 248, 0.15) 0%, transparent 70%),
-        radial-gradient(ellipse at 80% 20%, rgba(14, 165, 233, 0.12) 0%, transparent 60%),
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
+        radial-gradient(ellipse at 20% 80%, rgba(18, 130, 162, 0.15) 0%, transparent 70%), /* Teal Blue */
+        radial-gradient(ellipse at 80% 20%, rgba(3, 64, 120, 0.12) 0%, transparent 60%), /* Deep Blue */
+        radial-gradient(circle at 50% 50%, rgba(1, 29, 77, 0.05) 0%, transparent 40%); /* Dark Navy */
     background-size: 1200px 800px, 800px 600px, 400px 400px;
     background-position: 0% 0%, 100% 100%, center center;
     animation: heroFloat 20s ease-in-out infinite;
     padding: 2rem 1rem;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 @keyframes heroFloat {
@@ -40,7 +40,7 @@
 .heroContent {
     position: relative;
     z-index: 1;
-    max-width: 800px;
+    max-width: 900px;
     padding: 0 1rem;
     animation: fadeInUp 1.2s ease-out;
 }
@@ -57,46 +57,53 @@
 }
 
 .title {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: bold;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-tertiary) 100%);
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #011D4D 0%, #034078 50%, #1282A2 100%); /* Navy to Teal gradient */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: titleGlow 3s ease-in-out infinite alternate;
+    line-height: 1.2;
 }
 
 @keyframes titleGlow {
     0% {
-        filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.4));
+        filter: drop-shadow(0 0 10px rgba(18, 130, 162, 0.4));
     }
     100% {
-        filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.7));
+        filter: drop-shadow(0 0 20px rgba(3, 64, 120, 0.7));
     }
 }
 
 .subtitle {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-    color: var(--text-secondary);
+    font-size: 1.6rem;
+    margin-bottom: 2.5rem;
+    color: #034078; /* Deep Blue */
+    font-weight: 400;
+    line-height: 1.4;
 }
 
 .getStartedBtn {
-    padding: 1rem 2rem;
+    padding: 1.2rem 2.5rem;
     font-size: 1.2rem;
-    color: var(--bg-primary);
-    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-tertiary) 100%);
+    color: #E4DFDA; /* Light Beige text */
+    background: linear-gradient(135deg, #1282A2 0%, #034078 50%, #011D4D 100%); /* Teal to Navy gradient */
     border: 2px solid transparent;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+    box-shadow: 0 6px 20px rgba(18, 130, 162, 0.4);
     transform: translateY(0);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
 }
 
+.getStartedBtn::before {
 .getStartedBtn::before {
     content: '';
     position: absolute;
@@ -104,14 +111,14 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(228, 223, 218, 0.3), transparent); /* Light Beige shine */
     transition: left 0.6s;
 }
 
 .getStartedBtn:hover {
-    background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-tertiary) 50%, var(--accent-primary) 100%);
+    background: linear-gradient(135deg, #034078 0%, #1282A2 50%, #63372C 100%); /* Deep Blue to Brown gradient */
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.6);
+    box-shadow: 0 10px 30px rgba(18, 130, 162, 0.6);
 }
 
 .getStartedBtn:hover::before {
@@ -124,10 +131,37 @@
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .title {
-        font-size: 3rem;
+    .hero {
+        height: 80vh;
+        padding: 1rem;
     }
+    
+    .title {
+        font-size: 2.5rem;
+    }
+    
     .subtitle {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+    }
+    
+    .getStartedBtn {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .getStartedBtn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
     }
 } 

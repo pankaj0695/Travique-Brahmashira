@@ -1,37 +1,39 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { useUser } from "../../UserContext";
-import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const Navbar = () => {
   const location = useLocation();
   const { user } = useUser();
+  const navigate = useNavigate();
+
+  const navItems = [
+    { to: "/", label: "Home" },
+    { to: "/plan", label: "Plan Trip" },
+    { to: "/posts", label: "Posts" },
+    { to: "/about", label: "About us" },
+    { to: "/contact", label: "Contact us" },
+  ];
+
+  const isActive = (path) =>
+    location.pathname === path ? styles.activeLink : "";
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
         <Link to="/">Travique</Link>
       </div>
       <ul className={styles.navLinks}>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About us</Link>
-        </li>
-        <li>
-          <Link to="/contact">Contact us</Link>
-        </li>
-        {user && (
-          <li>
-            <Link to="/plan" className={styles.exploreLink}>
-              Explore
+        {navItems.map((item) => (
+          <li key={item.to}>
+            <Link to={item.to} className={isActive(item.to)}>
+              {item.label}
             </Link>
           </li>
-        )}
+        ))}
       </ul>
       <div className={styles.profileRight}>
-        <ThemeToggle />
         {user && (
           <Link to="/profile" className={styles.userInfoLink}>
             <div className={styles.userInfo}>
@@ -51,28 +53,26 @@ const Navbar = () => {
           </Link>
         )}
         {!user && (
-          <>
-            <Link to="/login">
+          <div className={styles.authButtons}>
+            <Link to="/login" className={styles.btnWrapper}>
               <button
-                className={
-                  styles.loginBtn +
-                  (location.pathname === "/login" ? " " + styles.active : "")
-                }
+                className={`${styles.loginBtn} ${
+                  location.pathname === "/login" ? styles.btnActive : ""
+                }`}
               >
                 Login
               </button>
             </Link>
-            <Link to="/signup">
+            <Link to="/signup" className={styles.btnWrapper}>
               <button
-                className={
-                  styles.signupBtn +
-                  (location.pathname === "/signup" ? " " + styles.active : "")
-                }
+                className={`${styles.signupBtn} ${
+                  location.pathname === "/signup" ? styles.btnActive : ""
+                }`}
               >
                 Sign Up
               </button>
             </Link>
-          </>
+          </div>
         )}
       </div>
     </nav>

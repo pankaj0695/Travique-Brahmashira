@@ -11,9 +11,9 @@ const PastTrip = require("./models/PastTrip");
 // Import route files
 const userAuthRoutes = require("./routes/userAuth");
 const tripRoutes = require("./routes/tripRoutes");
-
 const adminAuthRoutes = require("./routes/adminAuth");
 const imageRoutes = require("./routes/imageRoutes");
+const locationRoutes = require("./routes/locationRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -27,14 +27,13 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-
 // Use route files
-
 app.use("/api/auth", userAuthRoutes);
 app.use("/api/admin", adminAuthRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/images", imageRoutes);
 app.use("/api/blogs", blogRoutes);
+app.use("/api/locations", locationRoutes);
 
 // MongoDB Connection
 mongoose

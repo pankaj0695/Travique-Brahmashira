@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import styles from "./PlanTrip.module.css";
-import { FaMapMarkerAlt, FaPlane, FaUserCircle } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaPlane,
+  FaUserCircle,
+  FaSpinner,
+} from "react-icons/fa";
 import { useUser } from "../UserContext";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
 
-const RAPIDAPI_KEY = import.meta.env.VITE_RAPID_API_KEY; // Set this in your .env file
+// Backend API base URL
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
 const PlanTrip = () => {
   const { user, setTripDetails } = useUser();
@@ -26,48 +33,103 @@ const PlanTrip = () => {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
 
+  // Loading states
+  const [loadingCountries, setLoadingCountries] = useState(false);
+  const [loadingStates, setLoadingStates] = useState(false);
+  const [loadingCities, setLoadingCities] = useState(false);
+  const [error, setError] = useState("");
+
+  // Utility function for API calls
+  const fetchFromAPI = async (endpoint) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/locations${endpoint}`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.message || "API request failed");
+      }
+
+      return data.data;
+    } catch (error) {
+      console.error("API call failed:", error);
+      throw error;
+    }
+  };
+
   // Fetch countries on mount
   useEffect(() => {
-    fetch("https://wft-geo-db.p.rapidapi.com/v1/geo/countries", {
-      headers: {
-        "X-RapidAPI-Key": RAPIDAPI_KEY, // Use your own RapidAPI key
-        "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setCountries(data.data || []));
+    const fetchCountries = async () => {
+      setLoadingCountries(true);
+      setError("");
+
+      try {
+        const countriesData = await fetchFromAPI("/countries");
+        setCountries(countriesData);
+      } catch (error) {
+        console.error("Failed to fetch countries:", error.message);
+        setError("Failed to load countries. Please refresh the page.");
+      } finally {
+        setLoadingCountries(false);
+      }
+    };
+
+    fetchCountries();
   }, []);
 
   // Fetch states when country changes
   useEffect(() => {
-    if (!country) return setStates([]);
-    fetch(
-      `https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${country}/regions`,
-      {
-        headers: {
-          "X-RapidAPI-Key": RAPIDAPI_KEY,
-          "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
-        },
+    const fetchStates = async () => {
+      if (!country) {
+        setStates([]);
+        return;
       }
-    )
-      .then((res) => res.json())
-      .then((data) => setStates(data.data || []));
+
+      setLoadingStates(true);
+
+      try {
+        const statesData = await fetchFromAPI(`/countries/${country}/states`);
+        setStates(statesData);
+      } catch (error) {
+        console.error("Failed to fetch states:", error.message);
+        setError("Failed to load states. Please try again.");
+        setStates([]);
+      } finally {
+        setLoadingStates(false);
+      }
+    };
+
+    fetchStates();
   }, [country]);
 
   // Fetch cities when state changes
   useEffect(() => {
-    if (!country || !state) return setCities([]);
-    fetch(
-      `https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${country}/regions/${state}/cities?limit=10`,
-      {
-        headers: {
-          "X-RapidAPI-Key": RAPIDAPI_KEY,
-          "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
-        },
+    const fetchCities = async () => {
+      if (!country || !state) {
+        setCities([]);
+        return;
       }
-    )
-      .then((res) => res.json())
-      .then((data) => setCities(data.data || []));
+
+      setLoadingCities(true);
+
+      try {
+        const citiesData = await fetchFromAPI(
+          `/countries/${country}/states/${state}/cities?limit=50&majorOnly=false`
+        );
+        setCities(citiesData);
+      } catch (error) {
+        console.error("Failed to fetch cities:", error.message);
+        setError("Failed to load cities. Please try again.");
+        setCities([]);
+      } finally {
+        setLoadingCities(false);
+      }
+    };
+
+    fetchCities();
   }, [country, state]);
 
   const handlePreferenceChange = (e) => {
@@ -129,6 +191,9 @@ const PlanTrip = () => {
           <p className={styles.subtitle}>
             Tell us about your trip and let TravelBuddy take care of the rest.
           </p>
+
+          {error && <div className={styles.errorMessage}>⚠️ {error}</div>}
+
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
               <label className={styles.inputLabel}>
@@ -139,19 +204,27 @@ const PlanTrip = () => {
                     setCountry(e.target.value);
                     setState("");
                     setCity("");
+                    setError(""); // Clear error when user makes selection
                   }}
                   className={styles.input}
                   required
+                  disabled={loadingCountries}
                 >
-                  <option value="">Select Country</option>
+                  <option value="">
+                    {loadingCountries
+                      ? "Loading countries..."
+                      : "Select Country"}
+                  </option>
                   {countries.map((c) => (
                     <option key={c.code} value={c.code}>
                       {c.name}
                     </option>
                   ))}
                 </select>
+                {loadingCountries && <FaSpinner className={styles.spinner} />}
               </label>
             </div>
+
             {country && (
               <div className={styles.inputGroup}>
                 <label className={styles.inputLabel}>
@@ -161,37 +234,56 @@ const PlanTrip = () => {
                     onChange={(e) => {
                       setState(e.target.value);
                       setCity("");
+                      setError("");
                     }}
                     className={styles.input}
                     required
+                    disabled={loadingStates}
                   >
-                    <option value="">Select State/Region</option>
+                    <option value="">
+                      {loadingStates
+                        ? "Loading states..."
+                        : "Select State/Region"}
+                    </option>
                     {states.map((s) => (
                       <option key={s.code} value={s.code}>
                         {s.name}
                       </option>
                     ))}
                   </select>
+                  {loadingStates && <FaSpinner className={styles.spinner} />}
                 </label>
               </div>
             )}
+
             {state && (
               <div className={styles.inputGroup}>
                 <label className={styles.inputLabel}>
                   <FaMapMarkerAlt className={styles.inputIcon} />
                   <select
                     value={city}
-                    onChange={(e) => setCity(e.target.value)}
+                    onChange={(e) => {
+                      setCity(e.target.value);
+                      setError("");
+                    }}
                     className={styles.input}
                     required
+                    disabled={loadingCities}
                   >
-                    <option value="">Select City</option>
+                    <option value="">
+                      {loadingCities ? "Loading cities..." : "Select City"}
+                    </option>
                     {cities.map((cityObj) => (
-                      <option key={cityObj.id} value={cityObj.name}>
+                      <option key={cityObj._id} value={cityObj.name}>
                         {cityObj.name}
+                        {cityObj.isCapital && " (Capital)"}
+                        {cityObj.isMajorCity &&
+                          !cityObj.isCapital &&
+                          " (Major City)"}
                       </option>
                     ))}
                   </select>
+                  {loadingCities && <FaSpinner className={styles.spinner} />}
                 </label>
               </div>
             )}
