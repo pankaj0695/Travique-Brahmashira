@@ -2,27 +2,31 @@ const express = require("express");
 const authRouter = express.Router();
 const {
   register,
+  verifyEmail,
+  resendOtp,
   login,
   logout,
   getProfile,
 } = require("../controllers/userAuthentication");
 const userMiddleware = require("../middleware/userMiddleware");
-const adminMiddleware = require("../middleware/adminMiddleware");
+// const adminMiddleware = require("../middleware/adminMiddleware"); // not needed here now
 
-// Register
+// 🔹 Register (sends OTP to email)
 authRouter.post("/register", register);
 
-// Log in
+// 🔹 Verify Email with OTP
+authRouter.post("/verify-email", verifyEmail);
+
+// 🔹 Resend OTP
+authRouter.post("/resend-otp", resendOtp);
+
+// 🔹 Login (only works if email verified)
 authRouter.post("/login", login);
 
-// Log out
+// 🔹 Log out
 authRouter.post("/logout", logout);
 
-// Get Profile
+// 🔹 Get Profile (protected)
 authRouter.get("/profile", userMiddleware, getProfile);
-
-// Commented out routes for future use
-// authRouter.post('/admin/register', adminMiddleware, adminRegister);
-// authRouter.delete('/deleteProfile', userMiddleware, deleteProfile);
 
 module.exports = authRouter;
