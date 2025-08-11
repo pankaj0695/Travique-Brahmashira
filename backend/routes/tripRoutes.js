@@ -4,16 +4,25 @@ const PastTrip = require("../models/PastTrip");
 
 const tripRouter = express.Router();
 
-// Generate trip suggestions using DeepSeek AI
-tripRouter.post("/deepseek-trip", async (req, res) => {
+// Generate trip suggestions using Gemini 2.5 Flash (Vertex AI)
+const { VertexAI } = require("@google-cloud/vertexai");
+const path = require("path");
+
+tripRouter.post("/generate-trip", async (req, res) => {
   const { city, checkin, checkout, preference, budget } = req.body;
-  const preferenceText = Array.isArray(preference)
-    ? preference.join(", ")
-    : preference;
+
+  const preferenceText =
+    Array.isArray(preference) && preference.length
+      ? preference.join(", ")
+      : preference || "a mix of experiences";
+
+  // Derive trip length from dates instead of hardcoding 5 days
+  const daysText =
+    checkin && checkout ? `from ${checkin} to ${checkout}` : "for 5 days";
 
   const prompt = `You are a smart travel planner.
-Plan a 5-day budget-friendly trip to ${city} for a traveler who prefers ${preferenceText} experiences.
-The stay is from ${checkin} to ${checkout}. The total budget is ₹${budget}.
+Plan a budget-friendly trip to ${city} ${daysText} for a traveler who prefers ${preferenceText}.
+The total budget is ₹${budget}.
 
 Reply in valid JSON with these keys only: hotels, meals, itinerary, estimatedTotal, packingList.
 - hotels: array of at least 3 hotels (name, type, location, totalCost, features[])
@@ -24,25 +33,48 @@ Reply in valid JSON with these keys only: hotels, meals, itinerary, estimatedTot
 No extra text, no markdown, just the JSON object as response.`;
 
   try {
-    const response = await axios.post(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        model: "deepseek/deepseek-chat-v3-0324:free",
-        messages: [{ role: "user", content: prompt }],
+    const vertexAi = new VertexAI({
+      project: "massive-graph-465922-i8",
+      location: "us-central1",
+      googleAuthOptions: {
+        keyFilename: path.join(__dirname, "../vertex-ai-key.json"),
       },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    res.json(response.data);
+    });
+
+    const model = vertexAi.getGenerativeModel({
+      model: "gemini-2.5-flash",
+    });
+
+    const resp = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: {
+        response_mime_type: "application/json",
+        temperature: 0.3,
+      },
+    });
+
+    // Extract text safely
+    const text =
+      resp?.response?.candidates?.[0]?.content?.parts?.[0]?.text ?? "{}";
+
+    // Parse JSON safely
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      console.error("JSON parse error:", e, "raw:", text);
+      return res.status(502).json({
+        error: "Model did not return valid JSON",
+        raw: text,
+      });
+    }
+
+    return res.json(data);
   } catch (error) {
-    console.error("❌ Error in /deepseek-trip:", error);
-    res
+    console.error("❌ Error in /generate-trip:", error);
+    return res
       .status(500)
-      .json({ error: "Failed to fetch trip suggestions from OpenRouter" });
+      .json({ error: "Failed to fetch trip suggestions from Vertex AI" });
   }
 });
 
