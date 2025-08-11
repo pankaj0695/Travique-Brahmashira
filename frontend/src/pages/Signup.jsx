@@ -274,33 +274,39 @@ const Signup = () => {
       </div>
       {/* OTP Modal */}
       {showOtpModal && (
-        <div style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-          background: "rgba(0,0,0,0.4)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 9999,
-        }}>
-          <div style={{
-            background: "#fff",
-            padding: 32,
-            borderRadius: 12,
-            boxShadow: "0 4px 24px rgba(0,0,0,0.15)",
-            minWidth: 320,
-            textAlign: "center",
-          }}>
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              background: "#fff",
+              padding: 32,
+              borderRadius: 12,
+              boxShadow: "0 4px 24px rgba(0,0,0,0.15)",
+              minWidth: 320,
+              textAlign: "center",
+            }}
+          >
             <h3 style={{ marginBottom: 12 }}>Verify Your Email</h3>
-            <p style={{ marginBottom: 16 }}>Enter the OTP sent to your email to complete registration.</p>
+            <p style={{ marginBottom: 16 }}>
+              Enter the OTP sent to your email to complete registration.
+            </p>
             <form onSubmit={handleVerifyOtp}>
               <input
                 type="text"
                 value={otp}
-                onChange={e => setOtp(e.target.value)}
+                onChange={(e) => setOtp(e.target.value)}
                 placeholder="Enter OTP"
                 style={{
                   padding: 10,
@@ -313,7 +319,9 @@ const Signup = () => {
                 maxLength={6}
                 required
               />
-              {otpError && <div style={{ color: "red", marginBottom: 8 }}>{otpError}</div>}
+              {otpError && (
+                <div style={{ color: "red", marginBottom: 8 }}>{otpError}</div>
+              )}
               <button
                 type="submit"
                 style={{
