@@ -181,6 +181,19 @@ tripRouter.post("/saveTrip", async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    // Prevent duplicate save for same user + trip window + city
+    const existing = await PastTrip.findOne({
+      userId,
+      city,
+      checkIn,
+      checkOut,
+    });
+    if (existing) {
+      return res
+        .status(200)
+        .json({ success: true, trip: existing, duplicate: true });
+    }
+
     const newTrip = new PastTrip({
       userId,
       city,
@@ -193,7 +206,7 @@ tripRouter.post("/saveTrip", async (req, res) => {
 
     const savedTrip = await newTrip.save();
     console.log("✅ Trip saved:", savedTrip._id);
-    res.status(201).json({ success: true, trip: savedTrip });
+    res.status(201).json({ success: true, trip: savedTrip, duplicate: false });
   } catch (error) {
     console.error("❌ Error in saveTrip:", error);
     res
@@ -249,6 +262,115 @@ tripRouter.delete("/deleteTrip/:tripId", async (req, res) => {
   } catch (error) {
     console.error("Error deleting trip:", error);
     res.status(500).json({ error: "Failed to delete trip" });
+  }
+});
+
+// Update trip suggestions
+tripRouter.put("/updateTrip/:tripId", async (req, res) => {
+  try {
+    const { tripId } = req.params;
+    const { prompt } = req.body;
+
+    if (!tripId || !prompt) {
+      return res.status(400).json({ error: "Trip ID and prompt are required" });
+    }
+
+    const trip = await PastTrip.findById(tripId);
+    if (!trip) {
+      return res.status(404).json({ error: "Trip not found" });
+    }
+
+    // Generate updated suggestions using Gemini with the prompt
+    const updatePrompt = `Based on the original trip plan to ${
+      trip.city
+    } from ${trip.checkIn} to ${trip.checkOut} with budget ₹${
+      trip.budget
+    }, please update the suggestions according to this request: "${prompt}".
+
+Original preferences: ${
+      Array.isArray(trip.preference)
+        ? trip.preference.join(", ")
+        : trip.preference
+    }
+
+Please provide the updated plan in the same JSON format with these keys only: hotels, meals, itinerary, estimatedTotal, packingList.
+No extra text, no markdown, just the JSON object as response.`;
+
+    const vertexAi = new VertexAI({
+      project: "massive-graph-465922-i8",
+      location: "us-central1",
+      googleAuthOptions: {
+        keyFilename: path.join(__dirname, "../vertex-ai-key.json"),
+      },
+    });
+
+    const model = vertexAi.getGenerativeModel({
+      model: "gemini-2.5-flash",
+    });
+
+    const resp = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: updatePrompt }] }],
+      generationConfig: {
+        response_mime_type: "application/json",
+        temperature: 0.3,
+      },
+    });
+
+    const text =
+      resp?.response?.candidates?.[0]?.content?.parts?.[0]?.text ?? "{}";
+
+    let updatedSuggestions;
+    try {
+      updatedSuggestions = JSON.parse(text);
+    } catch (e) {
+      console.error("JSON parse error:", e, "raw:", text);
+      return res.status(502).json({
+        error: "Model did not return valid JSON",
+        raw: text,
+      });
+    }
+
+    // Update the trip with new suggestions
+    const updatedTrip = await PastTrip.findByIdAndUpdate(
+      tripId,
+      { suggestions: updatedSuggestions },
+      { new: true }
+    );
+
+    res.json({ success: true, trip: updatedTrip });
+  } catch (error) {
+    console.error("Error updating trip:", error);
+    res.status(500).json({ error: "Failed to update trip" });
+  }
+});
+
+// Share a trip
+tripRouter.put("/shareTrip/:tripId", async (req, res) => {
+  try {
+    const { tripId } = req.params;
+
+    if (!tripId) {
+      return res.status(400).json({ error: "Trip ID is required" });
+    }
+
+    const updatedTrip = await PastTrip.findByIdAndUpdate(
+      tripId,
+      { shared: true },
+      { new: true }
+    );
+
+    if (!updatedTrip) {
+      return res.status(404).json({ error: "Trip not found" });
+    }
+
+    res.json({
+      success: true,
+      trip: updatedTrip,
+      message: "Trip shared successfully",
+    });
+  } catch (error) {
+    console.error("Error sharing trip:", error);
+    res.status(500).json({ error: "Failed to share trip" });
   }
 });
 

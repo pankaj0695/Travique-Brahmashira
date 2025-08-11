@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const crypto = require("crypto");
+const bcrypt = require("bcrypt");
+
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
@@ -70,7 +73,7 @@ const userSchema = new Schema(
       default: false,
     },
     emailOtp: {
-      type: String, // store OTP (hashed in production)
+      type: String, // store hashed OTP
     },
     emailOtpExpires: {
       type: Date, // OTP expiration time
@@ -88,5 +91,44 @@ const userSchema = new Schema(
   }
 );
 
-const User = mongoose.model("user", userSchema);
+// 🔹 Pre-save: Hash password if modified
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+// 🔹 Compare entered password with hashed one
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
+// 🔹 Generate and set email OTP (hashed) + expiry
+userSchema.methods.generateEmailOtp = function () {
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  this.emailOtp = crypto.createHash("sha256").update(otp).digest("hex");
+  this.emailOtpExpires = Date.now() + 10 * 60 * 1000; // 10 min
+  return otp; // return plain OTP for sending in email
+};
+
+// 🔹 Verify provided OTP
+userSchema.methods.verifyEmailOtp = function (enteredOtp) {
+  const hashedEnteredOtp = crypto
+    .createHash("sha256")
+    .update(enteredOtp)
+    .digest("hex");
+  const isMatch = hashedEnteredOtp === this.emailOtp;
+  const notExpired = Date.now() < this.emailOtpExpires;
+  return isMatch && notExpired;
+};
+
+// 🔹 Mark email as verified & clear OTP
+userSchema.methods.markEmailVerified = function () {
+  this.isEmailVerified = true;
+  this.emailOtp = undefined;
+  this.emailOtpExpires = undefined;
+};
+
+const User = mongoose.model("User", userSchema);
 module.exports = User;

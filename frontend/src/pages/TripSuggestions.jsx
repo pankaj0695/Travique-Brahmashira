@@ -40,8 +40,7 @@ const TripSuggestions = () => {
   const [loadingPhq, setLoadingPhq] = useState(false);
   const [phqErr, setPhqErr] = useState(null);
 
-  const [savingTrip, setSavingTrip] = useState(false);
-  const [tripSaved, setTripSaved] = useState(false);
+  const hasSavedRef = useRef(false); // guard to ensure single save
 
   const [hotelImage, setHotelImage] = useState("");
 
@@ -55,15 +54,19 @@ const TripSuggestions = () => {
 
   // Function to save trip to MongoDB
   const saveTrip = async (suggestions) => {
-    if (!user?.uid) {
-      console.log("No user logged in, skipping trip save");
+    if (hasSavedRef.current) {
+      return; // prevent duplicate save attempts
+    }
+    // Ensure we have an authenticated user with an id
+    const userId = user?._id || user?.id; // fallback if backend returns id
+    if (!userId) {
+      console.log("No authenticated user id found; trip not persisted.");
       return;
     }
 
-    setSavingTrip(true);
     try {
       const requestBody = {
-        userId: user.uid,
+        userId,
         city,
         checkIn: checkin,
         checkOut: checkout,
@@ -84,16 +87,14 @@ const TripSuggestions = () => {
 
       if (response.ok) {
         const result = await response.json();
-        setTripSaved(true);
-        console.log("Trip saved successfully:", result);
+        hasSavedRef.current = true;
+        console.log("Trip saved successfully:\n", result);
       } else {
         const errorData = await response.json();
         console.error("Failed to save trip:", response.status, errorData);
       }
     } catch (error) {
       console.error("Error saving trip:", error);
-    } finally {
-      setSavingTrip(false);
     }
   };
 
@@ -170,11 +171,13 @@ const TripSuggestions = () => {
 
   useEffect(() => {
     if (!city || !checkin || !checkout || !preference || !budget) return;
+    // Reset state for a fresh generation
     setLoadingDeepSeek(true);
     setDeepSeekError(null);
     setDeepSeekResult(null);
-    setTripSaved(false);
     setHotelImage("");
+    // Allow exactly one save for each new generation
+    hasSavedRef.current = false;
 
     generateTrip({ city, checkin, checkout, preference, budget })
       .then(async (result) => {
@@ -371,18 +374,7 @@ const TripSuggestions = () => {
                 </div>
               ) : deepSeekResult && typeof deepSeekResult === "object" ? (
                 <>
-                  {savingTrip && (
-                    <div className={styles.statusCard}>
-                      <span className={styles.statusIcon}>💾</span>
-                      <span>Saving trip to your profile...</span>
-                    </div>
-                  )}
-                  {tripSaved && (
-                    <div className={styles.successCard}>
-                      <span className={styles.statusIcon}>✅</span>
-                      <span>Trip saved to your profile!</span>
-                    </div>
-                  )}
+                  {/* Trip save status messages intentionally hidden per requirements */}
                   {Array.isArray(deepSeekResult.hotels) &&
                     deepSeekResult.hotels.length > 0 && (
                       <section>
@@ -487,8 +479,7 @@ const TripSuggestions = () => {
                                     className={styles.mealImage}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src =
-                                        "https://via.placeholder.com/300x200?text=No+Image";
+                                      e.target.src = "/no-image.svg";
                                     }}
                                   />
                                 )}
