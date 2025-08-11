@@ -41,7 +41,7 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(data.user));
 
       setUser(data.user);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     } finally {

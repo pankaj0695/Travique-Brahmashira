@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./dashboard.module.css";
 import banff from './assets/banff.webp'
 import santorini from './assets/santorini.jpeg'
@@ -68,6 +69,11 @@ const previousTrips = [
 
 export default function Dashboard() {
   const [bannerIdx, setBannerIdx] = useState(0);
+  const navigate = useNavigate();
+
+  const handlePlanTrip = () => {
+    navigate('/plan');
+  };
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -130,7 +136,7 @@ export default function Dashboard() {
         </div>
       </section>
       <div className={styles.planTripBtnContainerFull}>
-        <button className={styles.planTripBtn}>+ Plan a trip</button>
+        <button className={styles.planTripBtn} onClick={handlePlanTrip}>+ Plan a trip</button>
       </div>
     </div>
   );
