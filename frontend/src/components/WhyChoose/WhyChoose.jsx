@@ -9,13 +9,13 @@ const WhyChoose = () => {
       <div className={styles.cards}>
         <div className={styles.card}>
           <div className={styles.icon}><FaRobot /></div>
-          <h3>AI-Powered</h3>
-          <p>Smart recommendations based on your preferences.</p>
+          <h3>Exclusive plans with list of Local Events</h3>
+          <p>Smart recommendations that help you make most of your trip and explore the region .</p>
         </div>
         <div className={styles.card}>
           <div className={styles.icon}><FaRegClock /></div>
           <h3>Time-Saving</h3>
-          <p>Get detailed itineraries in minutes, not hours.</p>
+          <p>From Hotels, meals, events, sightseeing to the most amazing travel spots, get itineraries planned in just minutes.</p>
         </div>
         <div className={styles.card}>
           <div className={styles.icon}><FaWallet /></div>
