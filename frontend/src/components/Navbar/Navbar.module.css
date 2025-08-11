@@ -78,13 +78,13 @@
 }
 
 .signupBtn {
-    background-color: #ffc107;
+    background-color: white;
     color: #333;
-    border: 1px solid #ffc107;
+    border: 1px solid black;
 }
 
 .signupBtn:hover, .signupBtn.active {
-    background-color: #e0a800;
+    background-color: white;
 }
 
 .userEmail {
