@@ -21,6 +21,11 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpError, setOtpError] = useState("");
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState("");
   const navigate = useNavigate();
   const { setUser } = useUser();
 
@@ -94,16 +99,43 @@ const Signup = () => {
         throw new Error(data.message || "Registration failed");
       }
 
-      // Store token and user data in localStorage
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      setUser(data.user);
-      navigate("/");
+      // Show OTP modal for verification
+      setRegisteredEmail(signupData.emailId);
+      setShowOtpModal(true);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // OTP verification handler
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    setOtpError("");
+    setOtpLoading(true);
+    try {
+      const response = await fetch(`${backend_url}/api/auth/verify-email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ emailId: registeredEmail, otp }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "OTP verification failed");
+      }
+      // Store token and user data in localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
+      setShowOtpModal(false);
+      navigate("/");
+    } catch (err) {
+      setOtpError(err.message);
+    } finally {
+      setOtpLoading(false);
     }
   };
 
@@ -240,6 +272,68 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      {/* OTP Modal */}
+      {showOtpModal && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          background: "rgba(0,0,0,0.4)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999,
+        }}>
+          <div style={{
+            background: "#fff",
+            padding: 32,
+            borderRadius: 12,
+            boxShadow: "0 4px 24px rgba(0,0,0,0.15)",
+            minWidth: 320,
+            textAlign: "center",
+          }}>
+            <h3 style={{ marginBottom: 12 }}>Verify Your Email</h3>
+            <p style={{ marginBottom: 16 }}>Enter the OTP sent to your email to complete registration.</p>
+            <form onSubmit={handleVerifyOtp}>
+              <input
+                type="text"
+                value={otp}
+                onChange={e => setOtp(e.target.value)}
+                placeholder="Enter OTP"
+                style={{
+                  padding: 10,
+                  fontSize: 18,
+                  width: "100%",
+                  marginBottom: 12,
+                  borderRadius: 6,
+                  border: "1px solid #ccc",
+                }}
+                maxLength={6}
+                required
+              />
+              {otpError && <div style={{ color: "red", marginBottom: 8 }}>{otpError}</div>}
+              <button
+                type="submit"
+                style={{
+                  background: "#007bff",
+                  color: "#fff",
+                  padding: "10px 24px",
+                  border: "none",
+                  borderRadius: 6,
+                  fontWeight: 600,
+                  fontSize: 16,
+                  cursor: "pointer",
+                }}
+                disabled={otpLoading}
+              >
+                {otpLoading ? "Verifying..." : "Verify"}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
       <Footer />
     </>
   );
