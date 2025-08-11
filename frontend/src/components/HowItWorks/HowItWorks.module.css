@@ -1,25 +1,30 @@
 .howItWorks {
-        padding: 4rem 2rem;
-        text-align: center;
-        background-color: #ffffff;
-        /* subtle grid */
-        background-image:
-            linear-gradient(rgba(2, 6, 23, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(2, 6, 23, 0.05) 1px, transparent 1px);
-        background-size: 40px 40px, 40px 40px;
-        background-position: top left;
-        color: #0f172a;
+    padding: 4rem 2rem;
+    text-align: center;
+    background: var(--bg-secondary);
+    position: relative;
+    overflow: hidden;
+    /* Theme-aware background patterns */
+    background-image:
+      radial-gradient(ellipse at 25% 25%, rgba(56, 189, 248, 0.05) 0%, transparent 60%),
+      radial-gradient(ellipse at 75% 75%, rgba(14, 165, 233, 0.04) 0%, transparent 70%),
+      radial-gradient(circle at 50% 100%, var(--border-color) 0%, transparent 50%);
+    background-size: 800px 600px, 600px 800px, 1000px 300px;
+    background-position: 0% 0%, 100% 100%, center bottom;
+    color: var(--text-primary);
+    transition: background 0.3s ease;
 }
 
 .title {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
+    color: var(--text-primary);
 }
 
 .subtitle {
     font-size: 1.2rem;
     margin-bottom: 3rem;
-    color: #cbd5e1;
+    color: var(--text-secondary);
 }
 
 .steps {
@@ -30,24 +35,53 @@
 }
 
 .step {
-    background: rgba(15, 23, 42, 0.8);
-    color: #e5e7eb;
+    background: var(--card-bg);
+    color: var(--text-primary);
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 20px;
     width: 300px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    border: none;
-    transition: transform 0.3s ease;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.step::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ec4899, #db2777, #be185d);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
 }
 
 .step:hover {
-    transform: translateY(-8px);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.step:hover::before {
+    transform: scaleX(1);
 }
 
 .icon {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: #0284c7;
+    color: #be185d;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.step:hover .icon {
+    transform: scale(1.2) rotate(10deg);
+    color: #ec4899;
+    filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.6));
 }
 
 /* ensure card surfaces are light with subtle depth */

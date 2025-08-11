@@ -1,26 +1,35 @@
-/* Clean, valid styles for light-themed navbar */
+/* Clean, valid styles for themed navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #ffffff;
-  border-bottom: 1px solid rgba(2, 6, 23, 0.08);
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 1000;
-  color: #0f172a;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #0f172a;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-.logo a { text-decoration: none; color: inherit; }
+.logo a { 
+  text-decoration: none; 
+  color: inherit; 
+  transition: color 0.2s ease;
+}
+.logo a:hover {
+  color: var(--accent-primary);
+}
 
 .navLinks {
   list-style: none;
@@ -32,12 +41,37 @@
 }
 .navLinks li a {
   text-decoration: none;
-  color: #334155;
+  color: var(--text-secondary);
   font-weight: 500;
-  transition: color 0.2s;
+  transition: all 0.2s ease;
+  padding: 0.5rem 0;
+  position: relative;
 }
-.navLinks li a:hover { color: #0284c7; }
-.exploreLink { font-weight: 600; color: #0284c7; }
+
+.navLinks li a:hover { 
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+.navLinks li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-primary);
+  transition: width 0.3s ease;
+}
+
+.navLinks li a:hover::after {
+  width: 100%;
+}
+
+.exploreLink { 
+  font-weight: 600; 
+  color: var(--accent-primary) !important;
+}
 
 .profileRight {
   display: flex;
@@ -53,41 +87,71 @@
   cursor: pointer;
   font-weight: bold;
   font-size: 1rem;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  transition: all 0.3s ease;
+  border: 1px solid var(--accent-primary);
 }
 
 .loginBtn {
   background-color: transparent;
-  color: #0284c7;
-  border: 1px solid #0284c7;
+  color: var(--accent-primary);
 }
 .loginBtn:hover,
-.loginBtn.active { background-color: #0284c7; color: #ffffff; }
+.loginBtn.active { 
+  background-color: var(--accent-primary); 
+  color: var(--bg-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
 
 .signupBtn {
-  background-color: #0ea5e9;
-  color: #ffffff;
-  border: 1px solid #0ea5e9;
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
 }
 .signupBtn:hover,
-.signupBtn.active { background-color: #0284c7; border-color: #0284c7; }
+.signupBtn.active { 
+  background-color: var(--accent-secondary); 
+  border-color: var(--accent-secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
 
-.userInfo { display: flex; align-items: center; gap: 0.5rem; }
-.userInfoLink { text-decoration: none; color: inherit; transition: transform 0.2s, opacity 0.2s; }
-.userInfoLink:hover { transform: translateY(-1px); opacity: 0.8; }
+.userInfo { 
+  display: flex; 
+  align-items: center; 
+  gap: 0.5rem; 
+}
+.userInfoLink { 
+  text-decoration: none; 
+  color: inherit; 
+  transition: all 0.2s ease; 
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+.userInfoLink:hover { 
+  transform: translateY(-1px); 
+  background-color: var(--hover-bg);
+}
 
 .userAvatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #0284c7;
+  border: 2px solid var(--accent-primary);
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: all 0.2s ease;
 }
-.userAvatar:hover { border-color: #0369a1; }
+.userAvatar:hover { 
+  border-color: var(--accent-secondary);
+  transform: scale(1.05);
+}
 
-.userName { font-size: 1rem; color: #334155; font-weight: 500; margin-right: 0.7rem; }
+.userName { 
+  font-size: 1rem; 
+  color: var(--text-secondary); 
+  font-weight: 500; 
+  margin-right: 0.7rem; 
+}
 
 /* Export an empty active class so CSS modules can combine it with button styles */
 .active { outline: none; }

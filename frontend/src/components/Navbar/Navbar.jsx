@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { useUser } from "../../UserContext";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const Navbar = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const Navbar = () => {
         )}
       </ul>
       <div className={styles.profileRight}>
+        <ThemeToggle />
         {user && (
           <Link to="/profile" className={styles.userInfoLink}>
             <div className={styles.userInfo}>

@@ -1,13 +1,13 @@
 .footer {
-    background-color: #ffffff;
-    /* explicitly remove any background images (e.g., grids) from ancestors */
+    background-color: var(--bg-primary);
     background-image: none !important;
     background-repeat: no-repeat;
     background-size: auto;
-    color: #0f172a;
+    color: var(--text-primary);
     padding: 2.5rem 2rem 1rem 2rem;
     font-size: 1rem;
-    border-top: 1px solid rgba(2, 6, 23, 0.08);
+    border-top: 1px solid var(--border-color);
+    transition: all 0.3s ease;
 }
 
 .footerContent {
@@ -44,6 +44,7 @@
     font-size: 1.8rem;
     margin-bottom: 0;
     font-weight: 600;
+    color: var(--text-primary);
 }
 
 .links {
