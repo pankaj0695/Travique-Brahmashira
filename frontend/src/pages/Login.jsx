@@ -41,7 +41,7 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(data.user));
 
       setUser(data.user);
-      navigate("/");
+    navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -77,11 +77,6 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <div className={styles.forgotRow}>
-              <Link to="#" className={styles.forgot}>
-                Forgot Password?
-              </Link>
-            </div>
             <button
               className={styles.loginBtn}
               type="submit"

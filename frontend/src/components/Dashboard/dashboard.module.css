@@ -1,3 +1,107 @@
+/* Theme variables for dashboard */
+:root {
+  --dashboard-bg-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0ea5e9 100%);
+  --dashboard-bg-light: linear-gradient(135deg, #e0f7fa 0%, #f1f5f9 60%, #38bdf8 100%);
+  --dashboard-text-dark: #e7edf3;
+  --dashboard-text-light: #22223b;
+  --dashboard-border-dark: #334155;
+  --dashboard-border-light: #b6e0fe;
+  --dashboard-accent-dark: #22d3ee;
+  --dashboard-accent-light: #38bdf8;
+  --dashboard-card-bg-dark: rgba(4, 4, 46, 0.85);
+  --dashboard-card-bg-light: rgba(224, 247, 250, 0.85);
+  --dashboard-btn-bg-dark: #18181b;
+  --dashboard-btn-bg-light: #f1f5f9;
+  --dashboard-btn-text-dark: #22d3ee;
+  --dashboard-btn-text-light: #38bdf8;
+}
+.lightDashboard .bannerSection {
+  background: rgba(224, 247, 250, 0.7);
+  border-bottom: 2px solid #b6e0fe;
+}
+
+.lightDashboard .bannerImage {
+  filter: brightness(0.98) saturate(1.05) contrast(1.02);
+}
+
+.lightDashboard .carouselDots .dot,
+.lightDashboard .carouselDots .activeDot {
+  background: #b6e0fe;
+  border: 2px solid #38bdf8;
+}
+.lightDashboard .carouselDots .activeDot {
+  background: #38bdf8;
+  border-color: #38bdf8;
+}
+
+.lightDashboard .searchBarRow {
+  background: transparent;
+}
+.lightDashboard .searchBar {
+  background: #e0f7fa;
+  color: #22223b;
+  border: 2px solid #b6e0fe;
+  box-shadow: 0 2px 12px #38bdf833;
+}
+.lightDashboard .actionBtn {
+  background: #f1f5f9;
+  color: #22223b;
+  border: 2px solid #b6e0fe;
+  box-shadow: 0 2px 8px #38bdf822;
+}
+.lightDashboard .actionBtn:hover {
+  background: #38bdf8;
+  color: #f1f5f9;
+}
+
+.lightDashboard .sectionTitle {
+  color: #22223b;
+}
+
+.lightDashboard .regionalGridFull {
+  background: transparent !important;
+}
+.lightDashboard .regionBlock {
+  background: rgba(224, 247, 250, 0.85);
+  border: 2px solid #b6e0fe;
+  box-shadow: 0 4px 24px #38bdf833;
+}
+.lightDashboard .regionBlock span {
+  color: #38bdf8;
+}
+.lightDashboard .regionBlock:hover {
+  box-shadow: 0 6px 32px #38bdf866;
+}
+
+.lightDashboard .previousGridFull {
+  background: transparent !important;
+}
+.lightDashboard .prevBlock {
+  background: rgba(241, 245, 249, 0.85);
+  border: 2px solid #b6e0fe;
+  box-shadow: 0 4px 24px #fbbf2433;
+}
+.lightDashboard .prevBlock span {
+  color: #fbbf24;
+}
+.lightDashboard .prevBlock:hover {
+  box-shadow: 0 6px 32px #fbbf2466;
+}
+
+.lightDashboard .planTripBtnContainerFull {
+  background: transparent;
+}
+.lightDashboard .planTripBtn {
+  background: #f1f5f9;
+  color: #38bdf8;
+  border: 2px solid #38bdf8;
+  box-shadow: 0 2px 16px #38bdf833;
+}
+.lightDashboard .planTripBtn:hover {
+  background: #38bdf8;
+  color: #f1f5f9;
+  box-shadow: 0 4px 32px #38bdf877;
+}
 .fullPageDashboard {
   min-height: 100vh;
   width: 100vw;
@@ -9,6 +113,11 @@
   box-sizing: border-box;
   position: relative;
   overflow-x: hidden;
+}
+
+.lightDashboard {
+  background: linear-gradient(135deg, #e0f7fa 0%, #f1f5f9 60%, #38bdf8 100%);
+  color: #22223b;
 }
 
 .fullPageDashboard::before {
