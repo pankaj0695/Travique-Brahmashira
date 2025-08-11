@@ -7,16 +7,16 @@ require("dotenv").config();
 const PastTrip = require("./models/PastTrip");
 
 // Import route files
-const userAuthRoutes = require("./routes/Userauth");
+const userAuthRoutes = require("./routes/userAuth");
 const tripRoutes = require("./routes/tripRoutes");
 const imageRoutes = require("./routes/imageRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// CORS setup for Vercel frontend
+// CORS setup for frontend
 const corsOptions = {
-  origin: "*",
+  origin: ["http://localhost:5173", "http://localhost:3000"], // Add your frontend URLs
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };

@@ -1,6 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "./firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const UserContext = createContext();
 
@@ -14,29 +12,56 @@ export function UserProvider({ children }) {
 
   // Add tripDetails state
   const [tripDetails, setTripDetails] = useState({
-    city: '',
-    checkin: '',
-    checkout: '',
-    preference: '',
-    budget: 10000
+    city: "",
+    checkin: "",
+    checkout: "",
+    preference: "",
+    budget: 10000,
   });
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
-      setLoading(false);
-    });
-    return unsubscribe;
+    // Check if user is logged in by checking localStorage
+    const checkAuthStatus = () => {
+      try {
+        const token = localStorage.getItem("token");
+        const userData = localStorage.getItem("user");
+
+        if (token && userData) {
+          setUser(JSON.parse(userData));
+        }
+      } catch (error) {
+        console.log("Error parsing user data from localStorage");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuthStatus();
   }, []);
 
-  const logout = () => signOut(auth);
+  const logout = () => {
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setUser(null);
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   return (
-    <UserContext.Provider value={{
-      user, logout,
-      tripDetails, setTripDetails
-    }}>
+    <UserContext.Provider
+      value={{
+        user,
+        logout,
+        setUser,
+        tripDetails,
+        setTripDetails,
+      }}
+    >
       {!loading && children}
     </UserContext.Provider>
   );
-} 
+}

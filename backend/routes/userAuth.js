@@ -1,17 +1,28 @@
 const express = require("express");
 const authRouter = express.Router();
-const { register, login } = require("../controllers/userAuthentication");
+const {
+  register,
+  login,
+  logout,
+  getProfile,
+} = require("../controllers/userAuthentication");
 const userMiddleware = require("../middleware/userMiddleware");
 const adminMiddleware = require("../middleware/adminMiddleware");
+
 // Register
-// Log in
-// Log out
-// Get Profile
 authRouter.post("/register", register);
+
+// Log in
 authRouter.post("/login", login);
-// authRouter.post('/logout', userMiddleware, logout);
-// authRouter.post('/admin/register', adminMiddleware,adminRegister);
-// authRouter.delete('/deleteProfile',userMiddleware,deleteProfile);
-// authRouter.get('/getProfile',getProfile);
+
+// Log out
+authRouter.post("/logout", logout);
+
+// Get Profile
+authRouter.get("/profile", userMiddleware, getProfile);
+
+// Commented out routes for future use
+// authRouter.post('/admin/register', adminMiddleware, adminRegister);
+// authRouter.delete('/deleteProfile', userMiddleware, deleteProfile);
 
 module.exports = authRouter;

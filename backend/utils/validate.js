@@ -4,9 +4,9 @@ const validate = (data) => {
     throw new Error("Data is required");
   }
 
-  const { firstName, emailId, password } = data;
+  const { name, emailId, password } = data;
 
-  if (!firstName || firstName.trim().length === 0) {
+  if (!name || name.trim().length === 0) {
     throw new Error("First name is required");
   }
 
