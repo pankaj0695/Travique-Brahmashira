@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #011D4D; /* Dark Navy Blue */
+    color: blue; /* Dark Navy Blue - more visible */
     background: linear-gradient(135deg, #E4DFDA 0%, #E4DFDA 50%, #E4DFDA 100%); /* Light Beige gradient */
     overflow: hidden;
     /* Modern background with custom color overlays */
@@ -58,12 +58,10 @@
 
 .title {
     font-size: 3.5rem;
-    font-weight: bold;
+    font-weight: 900; /* Maximum bold */
     margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, #011D4D 0%, #034078 50%, #1282A2 100%); /* Navy to Teal gradient */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #000000; /* Pure black for maximum contrast */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5); /* Stronger shadow */
     animation: titleGlow 3s ease-in-out infinite alternate;
     line-height: 1.2;
 }
@@ -80,9 +78,10 @@
 .subtitle {
     font-size: 1.6rem;
     margin-bottom: 2.5rem;
-    color: #034078; /* Deep Blue */
-    font-weight: 400;
+    color: #000000; /* Pure black for maximum contrast */
+    font-weight: 600; /* Make it much bolder */
     line-height: 1.4;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Stronger shadow */
 }
 
 .getStartedBtn {
@@ -103,7 +102,6 @@
     display: inline-block;
 }
 
-.getStartedBtn::before {
 .getStartedBtn::before {
     content: '';
     position: absolute;

@@ -177,13 +177,10 @@
 
 .heroTitle {
   font-size: 4.5rem;
-  font-weight: bold;
-  color: #e4dfda;
+  font-weight: 900; /* Maximum bold */
+  color: #034078; /* Deep blue for the title */
   margin-bottom: 20px;
-  background: linear-gradient(45deg, #e4dfda, #1282a2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  text-shadow: 3px 3px 6px rgba(255, 255, 255, 0.8); /* White shadow for contrast */
   line-height: 1.2;
   animation: titleGlow 3s ease-in-out infinite alternate;
 }
@@ -199,7 +196,9 @@
 
 .heroSubtitle {
   font-size: 1.3rem;
-  color: rgba(228, 223, 218, 0.9);
+  color: #034078; /* Deep blue for subtitle */
+  font-weight: 600; /* Make it bolder */
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* White shadow for contrast */
   line-height: 1.6;
   margin-bottom: 40px;
 }

@@ -1,7 +1,7 @@
 .bg {
   min-height: 100vh;
   width: 100%;
-  background: url("/form.jpg") no-repeat center center/cover;
+  background: linear-gradient(135deg, #011d4d 0%, #034078 50%, #1282a2 100%);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -9,6 +9,25 @@
   justify-content: center;
   padding-top: 30px;
   overflow-x: hidden;
+  /* Modern background patterns */
+  background-image: 
+    radial-gradient(ellipse at 20% 80%, rgba(18, 130, 162, 0.2) 0%, transparent 70%),
+    radial-gradient(ellipse at 80% 20%, rgba(3, 64, 120, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(228, 223, 218, 0.05) 0%, transparent 40%);
+  background-size: 1200px 800px, 800px 600px, 400px 400px;
+  background-position: 0% 0%, 100% 100%, center center;
+  animation: heroFloat 20s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { 
+    background-position: 0% 0%, 100% 100%, center center;
+    transform: translateY(0px);
+  }
+  50% { 
+    background-position: 10% 10%, 90% 90%, center center;
+    transform: translateY(-5px);
+  }
 }
 
 .navbar {
@@ -23,7 +42,7 @@
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #222;
+  color: #011D4D; /* Dark Navy Blue */
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -36,13 +55,13 @@
   padding: 0;
 }
 .navLinks li a {
-  color: #222;
+  color: #034078; /* Deep Blue */
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
 }
 .navLinks li a:hover {
-  color: #007bff;
+  color: #1282A2; /* Teal Blue */
 }
 .userCorner {
   display: flex;
@@ -51,19 +70,24 @@
 }
 .username {
   font-size: 1rem;
-  color: #222;
+  color: #011D4D; /* Dark Navy Blue */
   font-weight: 500;
 }
 .profileIcon {
   font-size: 2rem;
-  color: #222;
+  color: #034078; /* Deep Blue */
 }
 
 .centerCard {
   margin-top: 10px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 18px;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.15); /* Glass morphism effect */
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  box-shadow: 
+    0 25px 50px rgba(56, 189, 248, 0.15),
+    0 10px 25px rgba(14, 165, 233, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   padding: 2.5rem 2.5rem 2rem 2.5rem;
   max-width: 600px;
   width: 100%;
@@ -71,18 +95,38 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
 }
+
+.centerCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #22d3ee, #38bdf8, #0ea5e9);
+  border-radius: 25px 25px 0 0;
+  opacity: 1;
+}
+
 .title {
   font-size: 2.1rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 0.5rem;
-  color: #333;
+  background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 50%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
 }
 .subtitle {
   font-size: 1.1rem;
-  color: #666;
+  color: #63372C; /* Brown */
   margin-bottom: 1.5rem;
   text-align: center;
+  font-weight: 500;
 }
 .form {
   width: 100%;
@@ -97,15 +141,22 @@
   width: 100%;
   display: flex;
   align-items: center;
-  background: #f7f7f7;
+  background: rgba(255, 255, 255, 0.9); /* White background */
   border-radius: 8px;
   padding: 0.7rem 1rem;
-  border: 1px solid #e0e0e0;
+  border: 1px solid rgba(18, 130, 162, 0.3); /* Teal border */
   font-size: 1rem;
+  transition: all 0.3s ease;
 }
+
+.inputLabel:focus-within {
+  border-color: #1282A2; /* Teal Blue focus */
+  box-shadow: 0 0 0 3px rgba(18, 130, 162, 0.1);
+}
+
 .inputIcon {
   margin-right: 0.7rem;
-  color: #888;
+  color: #034078; /* Deep Blue */
   font-size: 1.2rem;
 }
 .input {
@@ -114,6 +165,7 @@
   outline: none;
   font-size: 1rem;
   width: 100%;
+  color: #011D4D; /* Dark Navy Blue */
 }
 .datesRow {
   display: flex;
@@ -125,7 +177,7 @@
   display: flex;
   flex-direction: column;
   font-size: 0.98rem;
-  color: #444;
+  color: #034078; /* Deep Blue */
   gap: 0.3rem;
 }
 .preferenceRow {
@@ -133,21 +185,28 @@
   align-items: center;
   gap: 1.2rem;
   font-size: 1rem;
-  color: #444;
+  color: #011D4D; /* Dark Navy Blue */
 }
 .radioLabel {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  background: #f7f7f7;
+  background: rgba(255, 255, 255, 0.9); /* White background */
   border-radius: 7px;
   padding: 0.4rem 1rem;
-  border: 1px solid #e0e0e0;
+  border: 1px solid rgba(18, 130, 162, 0.3); /* Teal border */
   cursor: pointer;
   font-size: 1rem;
+  transition: all 0.3s ease;
 }
+
+.radioLabel:hover {
+  background: rgba(18, 130, 162, 0.1); /* Teal hover */
+  border-color: #1282A2;
+}
+
 .radioLabel input[type="radio"] {
-  accent-color: #007bff;
+  accent-color: #1282A2; /* Teal Blue */
 }
 .budgetSection {
   width: 100%;
@@ -161,7 +220,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.98rem;
-  color: #888;
+  color: #034078; /* Deep Blue */
   margin-bottom: 0.5rem;
 }
 .budgetInputs {
@@ -170,17 +229,25 @@
   width: 100%;
 }
 .budgetInputs .input {
-  background: #f7f7f7;
+  background: rgba(255, 255, 255, 0.9); /* White background */
   border-radius: 7px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid rgba(18, 130, 162, 0.3); /* Teal border */
   padding: 0.6rem 1rem;
   font-size: 1rem;
   width: 100%;
+  color: #011D4D; /* Dark Navy Blue */
+  transition: all 0.3s ease;
+}
+
+.budgetInputs .input:focus {
+  border-color: #1282A2; /* Teal Blue focus */
+  box-shadow: 0 0 0 3px rgba(18, 130, 162, 0.1);
+  outline: none;
 }
 .submitBtn {
   width: 100%;
-  background: #222;
-  color: #fff;
+  background: linear-gradient(135deg, #1282A2 0%, #034078 50%, #011D4D 100%); /* Teal to Navy gradient */
+  color: #E4DFDA; /* Light Beige text */
   border: none;
   border-radius: 8px;
   padding: 1rem 0;
@@ -192,17 +259,21 @@
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(18, 130, 162, 0.3);
 }
+
 .submitBtn:hover {
-  background-color: #e65a00;
+  background: linear-gradient(135deg, #034078 0%, #1282A2 50%, #63372C 100%); /* Deep Blue to Brown gradient */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(18, 130, 162, 0.4);
 }
 .planeIcon {
   margin-right: 8px;
 }
 .infoText {
   font-size: 0.95rem;
-  color: #888;
+  color: #034078; /* Deep Blue */
   margin-top: 1.2rem;
   text-align: center;
 }
@@ -215,7 +286,7 @@
   display: block;
   margin-bottom: 10px;
   font-weight: 500;
-  color: #555;
+  color: #011D4D; /* Dark Navy Blue */
 }
 
 .checkboxGroup {
@@ -227,22 +298,22 @@
 .checkboxLabel {
   display: flex;
   align-items: center;
-  background-color: #f9f9f9;
+  background: rgba(255, 255, 255, 0.9); /* White background */
   border-radius: 20px;
   padding: 8px 12px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(18, 130, 162, 0.3); /* Teal border */
 }
 
 .checkboxLabel:hover {
-  background-color: #f0f0f0;
-  border-color: #ccc;
+  background: rgba(18, 130, 162, 0.1); /* Teal hover */
+  border-color: #1282A2;
 }
 
 .checkboxLabel input[type="checkbox"] {
   margin-right: 8px;
-  accent-color: #ff6f00;
+  accent-color: #1282A2; /* Teal Blue */
 }
 
 @media (max-width: 700px) {
@@ -273,9 +344,9 @@
 
 /* Error message styles */
 .errorMessage {
-  background-color: #fff3cd;
-  border: 1px solid #ffeaa7;
-  color: #856404;
+  background: rgba(255, 243, 205, 0.9); /* Light warning background */
+  border: 1px solid #1282A2; /* Teal border */
+  color: #011D4D; /* Dark Navy text */
   padding: 0.75rem 1rem;
   border-radius: 8px;
   margin-bottom: 1rem;
@@ -289,7 +360,7 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: #007bff;
+  color: #1282A2; /* Teal Blue */
   animation: spin 1s linear infinite;
 }
 

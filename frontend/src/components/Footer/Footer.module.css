@@ -1,13 +1,13 @@
 .footer {
   background: linear-gradient(
     135deg,
-    #011d4d 0%,
-    #034078 100%
+    #011d4d 50%,
+    #034078 50%
   ); /* Dark Navy to Deep Blue gradient */
   background-image: none !important;
   background-repeat: no-repeat;
   background-size: auto;
-  color: #e4dfda; /* Light Beige text */
+  color: #8B372C; /* Maroon text */
   padding: 3rem 2rem 1.5rem 2rem;
   font-size: 1rem;
   border-top: 3px solid #1282a2; /* Teal Blue border */
@@ -47,7 +47,7 @@
 }
 
 .footer-copyright {
-  color: rgba(228, 223, 218, 0.8); /* Light Beige with opacity */
+  color: rgba(139, 55, 44, 0.8); /* Maroon with opacity */
   font-size: 14px;
   margin: 0;
 }

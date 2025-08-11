@@ -12,7 +12,6 @@ import Profile from "./pages/Profile";
 import PlanTrip from "./pages/PlanTrip";
 import TripSuggestions from "./pages/TripSuggestions";
 import AboutUs from "./pages/AboutUs";
-import ContactUs from "./pages/ContactUs";
 import Dashboard from "./components/Dashboard/dashboard";
 import Blog from "./pages/blog";
 
@@ -39,7 +38,6 @@ function App() {
         <Route path="/plan" element={<PlanTrip />} />
         <Route path="/results" element={<TripSuggestions />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/contact" element={<ContactUs />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/posts" element={<Blog />} />
       </Routes>

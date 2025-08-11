@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Footer.module.css';
 
 const Footer = () => {
@@ -6,8 +7,8 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
       </div>
-      <div className={styles.footerBottom}>
-        <p>&copy; 2025 Travique</p>
+      <div className={styles.footerBottom} style={{ flexDirection: 'column' }}>
+      <p>&copy; 2025 Travique</p>
       </div>
     </footer>
   );

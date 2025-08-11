@@ -9,11 +9,10 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const navItems = [
-    { to: "/", label: "Home" },
+    { to: user ? "/dashboard" : "/", label: "Home" },
     { to: "/plan", label: "Plan Trip" },
     { to: "/posts", label: "Posts" },
     { to: "/about", label: "About us" },
-    { to: "/contact", label: "Contact us" },
   ];
 
   const isActive = (path) =>

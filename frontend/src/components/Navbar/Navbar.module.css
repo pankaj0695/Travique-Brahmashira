@@ -9,7 +9,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  color: #011d4d; /* Dark Navy Blue */
+  color: #8B372C; /* Maroon */
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 10px rgba(1, 29, 77, 0.1);
@@ -18,7 +18,7 @@
 .logo {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #011d4d; /* Dark Navy Blue */
+  color: #8B372C; /* Maroon */
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -42,7 +42,7 @@
 }
 .navLinks li a {
   text-decoration: none;
-  color: #034078; /* Deep Blue */
+  color: #8B372C; /* Maroon */
   font-weight: 500;
   transition: all 0.2s ease;
   padding: 0.5rem 0;
@@ -167,7 +167,7 @@
 
 .userName {
   font-size: 1rem;
-  color: #034078; /* Deep Blue */
+  color: #8B372C; /* Maroon */
   font-weight: 500;
   margin-right: 0.7rem;
 }
@@ -206,5 +206,184 @@
   .userName {
     font-size: 0.9rem;
     margin-right: 0.5rem;
+  }
+}
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
+  margin-left: auto; /* Push hamburger to the right */
+  order: 3; /* Ensure it appears after logo and before profile */
+}
+
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #8B372C; /* Maroon */
+  margin: 3px 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger:hover span {
+  background-color: #1282a2; /* Teal Blue */
+}
+
+/* Hamburger animation when open */
+.hamburgerOpen span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburgerOpen span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburgerOpen span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Desktop Navigation */
+.desktopNav {
+  display: flex;
+}
+
+/* Mobile Menu */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100vh;
+  background-color: #e4dfda;
+  z-index: 999;
+  transition: left 0.3s ease;
+  padding-top: 80px;
+}
+
+.mobileMenuOpen {
+  left: 0;
+}
+
+.mobileNavLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.mobileNavLinks li a {
+  color: #8B372C;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  display: block;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.mobileNavLinks li a:hover {
+  background-color: rgba(18, 130, 162, 0.1);
+  color: #1282a2;
+}
+
+/* Background overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .navLinks {
+    position: fixed;
+    top: 70px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background-color: #e4dfda;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 2rem;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .navLinksOpen {
+    left: 0;
+  }
+
+
+  .navLinks li {
+    margin: 1rem 0;
+  }
+
+  .navLinks li a {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #8B372C; /* Maroon */
+    padding: 1rem 2rem;
+    display: block;
+    width: 100%;
+    text-align: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .navLinks li a:hover {
+    background-color: rgba(18, 130, 162, 0.1);
+    color: #1282a2;
+    transform: none;
+  }
+
+  .navLinks li a::after {
+    display: none;
+  }
+
+  .mobileOverlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  .profileRight {
+    margin-left: 0;
+  }
+
+  .authButtons {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    gap: 1rem;
+    width: 200px;
+  }
+
+  .loginBtn,
+  .signupBtn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
   }
 }
