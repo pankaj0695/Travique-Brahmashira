@@ -1,7 +1,14 @@
 # ![Brahmashira Display Image](Brahmashira-display-image.png)
 
-Travique– Personalized Travel Planning Platform
-Team Brahmashira – Innovating travel planning with Odoo’s modular power.
+# Travique– Personalized Travel Planning Platform
+
+## Team Brahmashira – Innovating travel planning with Odoo’s modular power.
+
+## About the Project
+
+Travique is a next-generation personalized travel planning platform built during the Odoo Hackathon 2025. Leveraging the flexibility of Odoo's open-source business applications, our solution empowers travelers to plan, customize, budget, and share multi-city trips effortlessly.
+
+This project transforms the often overwhelming process of trip planning into a collaborative, budget-aware, and visually engaging experience.
 
 ## Team Members
 
@@ -9,12 +16,6 @@ Team Brahmashira – Innovating travel planning with Odoo’s modular power.
 **Sahil Tanwani** – 2023.sahil.tanwani24@ves.ac.in  
 **Priyanka Ochaney** – 2023.priyanka.ochaney@ves.ac.in  
 **Harshita Sewani** – 2023.harshita.sewani@ves.ac.in
-
-## About the Project
-
-Travique is a next-generation personalized travel planning platform built during the Odoo Hackathon 2025. Leveraging the flexibility of Odoo's open-source business applications, our solution empowers travelers to plan, customize, budget, and share multi-city trips effortlessly.
-
-This project transforms the often overwhelming process of trip planning into a collaborative, budget-aware, and visually engaging experience.
 
 ## Problem Statement
 
@@ -97,9 +98,6 @@ cd travique
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Run Odoo server
-./odoo-bin -c odoo.conf
 ```
 
 ## Usage
