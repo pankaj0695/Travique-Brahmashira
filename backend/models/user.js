@@ -55,15 +55,33 @@ const userSchema = new Schema(
       trim: true,
       maxlength: 500,
     },
-
     password: {
       type: String,
       required: true,
     },
     image: {
       type: String, // store image URL or path
-      default: "default-profile.png", // you can set a default image
+      default: "default-profile.png",
     },
+
+    // 📧 Email Verification Fields
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    emailOtp: {
+      type: String, // store OTP (hashed in production)
+    },
+    emailOtpExpires: {
+      type: Date, // OTP expiration time
+    },
+
+    blogs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Blog",
+      },
+    ],
   },
   {
     timestamps: true,
