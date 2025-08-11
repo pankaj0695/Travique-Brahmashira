@@ -1,13 +1,13 @@
 import React, { useRef, useMemo } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Stars, Line } from '@react-three/drei';
+import { Line } from '@react-three/drei';
 
 function Atmosphere() {
   return (
     <mesh scale={[1.06, 1.06, 1.06]}> 
       <sphereGeometry args={[1.5, 64, 64]} />
-      <meshBasicMaterial color="#14b8a6" transparent opacity={0.08} side={THREE.BackSide} />
+  <meshBasicMaterial color="#0ea5e9" transparent opacity={0.08} side={THREE.BackSide} />
     </mesh>
   );
 }
@@ -17,12 +17,13 @@ function Globe() {
     <group>
       <mesh castShadow receiveShadow>
         <sphereGeometry args={[1.5, 64, 64]} />
-        <meshStandardMaterial color="#0b1220" metalness={0.2} roughness={0.85} />
+  <meshStandardMaterial color="#93c5fd" metalness={0.15} roughness={0.9} />
       </mesh>
       {/* Stylized meridians/parallels */}
       <mesh>
         <sphereGeometry args={[1.502, 32, 32]} />
-        <meshBasicMaterial color="#334155" wireframe transparent opacity={0.35} />
+  <meshBasicMaterial color="#94a3b8" wireframe transparent opacity={0.35} />
+  <meshBasicMaterial color="#60a5fa" wireframe transparent opacity={0.35} />
       </mesh>
       <Atmosphere />
     </group>
@@ -69,22 +70,22 @@ function Plane({ radius = 1.8, speed = 0.4 }) {
 
   return (
     <group ref={ref}>
-      {/* Simple stylized plane */}
+  {/* Simple stylized plane in blue tones */}
       <mesh castShadow position={[0, 0, 0]}>
         <coneGeometry args={[0.06, 0.25, 16]} />
-        <meshStandardMaterial color="#fbbf24" roughness={0.4} metalness={0.3} />
+  <meshStandardMaterial color="#0284c7" roughness={0.4} metalness={0.3} />
       </mesh>
       <mesh castShadow position={[-0.08, 0, 0]}>
         <boxGeometry args={[0.16, 0.05, 0.05]} />
-        <meshStandardMaterial color="#fbbf24" />
+  <meshStandardMaterial color="#0284c7" />
       </mesh>
       <mesh castShadow position={[-0.08, 0.03, 0]} rotation={[0, 0, Math.PI / 12]}>
         <boxGeometry args={[0.1, 0.01, 0.25]} />
-        <meshStandardMaterial color="#fde68a" />
+  <meshStandardMaterial color="#bae6fd" />
       </mesh>
       <mesh castShadow position={[-0.08, -0.03, 0]} rotation={[0, 0, -Math.PI / 12]}>
         <boxGeometry args={[0.1, 0.01, 0.25]} />
-        <meshStandardMaterial color="#fde68a" />
+  <meshStandardMaterial color="#bae6fd" />
       </mesh>
     </group>
   );
@@ -110,8 +111,9 @@ function Scene() {
       <Globe />
       {/* A couple of flight arcs */}
       <Arc from={[40.7128, -74.0060]} to={[51.5074, -0.1278]} color="#22d3ee" />
-      <Arc from={[28.6139, 77.2090]} to={[35.6762, 139.6503]} color="#a78bfa" />
-      <Arc from={[34.0522, -118.2437]} to={[48.8566, 2.3522]} color="#fb7185" />
+  <Arc from={[40.7128, -74.0060]} to={[51.5074, -0.1278]} color="#0ea5e9" />
+  <Arc from={[28.6139, 77.2090]} to={[35.6762, 139.6503]} color="#3b82f6" />
+  <Arc from={[34.0522, -118.2437]} to={[48.8566, 2.3522]} color="#60a5fa" />
       <Plane />
     </group>
   );
@@ -120,10 +122,9 @@ function Scene() {
 export default function Hero3D() {
   return (
     <Canvas shadows camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}> 
-      <color attach="background" args={["#050814"]} />
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} castShadow />
-      <Stars radius={80} depth={50} count={3000} factor={4} saturation={0} fade speed={0.6} />
+      <color attach="background" args={["#ffffff"]} />
+      <ambientLight intensity={0.7} />
+      <directionalLight position={[5, 5, 5]} intensity={0.6} castShadow />
       <Scene />
     </Canvas>
   );

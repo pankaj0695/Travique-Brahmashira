@@ -1,11 +1,8 @@
 .howItWorks {
     padding: 4rem 2rem;
     text-align: center;
-    background-color: #6B5B95; /* A purple shade from the image */
-    color: white;
-}
-.howItWorks:hover{
-    background-color: rgb(74, 184, 253);
+    background-color: #ffffff;
+    color: #0f172a;
 }
 
 .title {
@@ -16,7 +13,7 @@
 .subtitle {
     font-size: 1.2rem;
     margin-bottom: 3rem;
-    color: #f0f0f0;
+    color: #cbd5e1;
 }
 
 .steps {
@@ -27,36 +24,29 @@
 }
 
 .step {
-    background-color: #ffc107;
-    color: #333;
+    background: rgba(15, 23, 42, 0.8);
+    color: #e5e7eb;
     padding: 2rem;
     border-radius: 10px;
     width: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border: none;
     transition: transform 0.3s ease;
 }
 
 .step:hover {
-    transform: translateY(-10px);
-    background-color: yellow;
+    transform: translateY(-8px);
 }
 
 .icon {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    /* In a real app, you'd use actual icons here */
-    font-weight: bold;
+    color: #0284c7;
 }
 
-.step h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.step p {
-    font-size: 1rem;
-    line-height: 1.5;
-}
+/* ensure card surfaces are light with subtle depth */
+.step { background: #f8fafc; color: #0f172a; }
+.step p { color: inherit; }
 
 @media (max-width: 992px) {
     .steps {

@@ -4,7 +4,6 @@ import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import HowItWorks from './components/HowItWorks/HowItWorks';
 import WhyChoose from './components/WhyChoose/WhyChoose';
-import CTA from './components/CTA/CTA';
 import Footer from './components/Footer/Footer';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -20,7 +19,6 @@ function Home() {
       <Hero />
       <HowItWorks />
       <WhyChoose />
-      <CTA />
       <Footer />
     </>
   );

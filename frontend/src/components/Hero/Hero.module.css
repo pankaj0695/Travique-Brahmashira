@@ -5,8 +5,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #e5e7eb; /* light gray */
-    background: #050814; /* dark theme background */
+    color: #0f172a; /* slate-900 */
+    background-color: #ffffff; /* light theme background */
     overflow: hidden;
 }
 
@@ -37,18 +37,18 @@
 .getStartedBtn {
     padding: 1rem 2rem;
     font-size: 1.2rem;
-    color: #0b1220;
-    background-color: #e5e7eb;
-    border: 2px solid #334155;
+    color: #ffffff;
+    background-color: #0ea5e9;
+    border: 2px solid #0ea5e9;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .getStartedBtn:hover {
-    background-color: transparent;
-    border: 2px solid #e5e7eb;
-    color: #e5e7eb;
+    background-color: #0284c7;
+    border: 2px solid #0284c7;
+    color: #ffffff;
 }
 
 /* Responsive Styles */
