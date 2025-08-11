@@ -7,7 +7,7 @@
 ## Team Members
 
 **Pankaj Gupta** – pankajgupta0695@gmail.com  
-**Sahil Tanwani** – 2023.sahil.tanwani24@ves.ac.in  
+**Sahil Tanwani** – 2023.sahil.tanwani@ves.ac.in  
 **Priyanka Ochaney** – 2023.priyanka.ochaney@ves.ac.in  
 **Harshita Sewani** – 2023.harshita.sewani@ves.ac.in
 
