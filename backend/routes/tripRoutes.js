@@ -160,16 +160,6 @@ tripRouter.post("/saveTrip", async (req, res) => {
     const { userId, city, checkIn, checkOut, preference, budget, suggestions } =
       req.body;
 
-    console.log("Sending to /saveTrip:", {
-      userId,
-      city,
-      checkIn,
-      checkOut,
-      preference,
-      budget,
-      suggestions,
-    });
-
     if (
       !userId ||
       !city ||

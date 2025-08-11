@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./PlanTrip.module.css";
 import { FaMapMarkerAlt, FaPlane, FaUserCircle } from "react-icons/fa";
 import { useUser } from "../UserContext";
@@ -15,6 +15,58 @@ const PlanTrip = () => {
   const [budget, setBudget] = useState(25000);
   const [minBudget, setMinBudget] = useState(5000);
   const [maxBudget, setMaxBudget] = useState(50000);
+
+  // Location dropdown states
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  // Fetch countries on mount
+  useEffect(() => {
+    fetch("https://wft-geo-db.p.rapidapi.com/v1/geo/countries", {
+      headers: {
+        "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY, // Replace with your RapidAPI key
+        "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setCountries(data.data || []));
+  }, []);
+
+  // Fetch states when country changes
+  useEffect(() => {
+    if (!country) return setStates([]);
+    fetch(
+      `https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${country}/regions`,
+      {
+        headers: {
+          "X-RapidAPI-Key": "demo-key", // Replace with your RapidAPI key
+          "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => setStates(data.data || []));
+  }, [country]);
+
+  // Fetch cities when state changes
+  useEffect(() => {
+    if (!country || !state) return setCities([]);
+    fetch(
+      `https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${country}/regions/${state}/cities?limit=10`,
+      {
+        headers: {
+          "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY, // Replace with your RapidAPI key
+          "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => setCities(data.data || []));
+  }, [country, state]);
 
   const handlePreferenceChange = (e) => {
     const { value, checked } = e.target;
@@ -44,11 +96,15 @@ const PlanTrip = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setTripDetails({
-      city: destination,
+      city,
+      country,
+      state,
       checkin: checkIn,
       checkout: checkOut,
       preference: preferences,
       budget,
+      minBudget,
+      maxBudget,
     });
     navigate("/results");
   };
@@ -75,16 +131,68 @@ const PlanTrip = () => {
             <div className={styles.inputGroup}>
               <label className={styles.inputLabel}>
                 <FaMapMarkerAlt className={styles.inputIcon} />
-                <input
-                  type="text"
-                  placeholder="Where would you like to go?"
-                  value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
+                <select
+                  value={country}
+                  onChange={(e) => {
+                    setCountry(e.target.value);
+                    setState("");
+                    setCity("");
+                  }}
                   className={styles.input}
                   required
-                />
+                >
+                  <option value="">Select Country</option>
+                  {countries.map((c) => (
+                    <option key={c.code} value={c.code}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
               </label>
             </div>
+            {country && (
+              <div className={styles.inputGroup}>
+                <label className={styles.inputLabel}>
+                  <FaMapMarkerAlt className={styles.inputIcon} />
+                  <select
+                    value={state}
+                    onChange={(e) => {
+                      setState(e.target.value);
+                      setCity("");
+                    }}
+                    className={styles.input}
+                    required
+                  >
+                    <option value="">Select State/Region</option>
+                    {states.map((s) => (
+                      <option key={s.code} value={s.code}>
+                        {s.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            )}
+            {state && (
+              <div className={styles.inputGroup}>
+                <label className={styles.inputLabel}>
+                  <FaMapMarkerAlt className={styles.inputIcon} />
+                  <select
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className={styles.input}
+                    required
+                  >
+                    <option value="">Select City</option>
+                    {cities.map((cityObj) => (
+                      <option key={cityObj.id} value={cityObj.name}>
+                        {cityObj.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            )}
             <div className={styles.datesRow}>
               <label className={styles.dateLabel}>
                 Check-in Date
