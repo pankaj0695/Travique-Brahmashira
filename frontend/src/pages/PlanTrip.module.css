@@ -1,7 +1,7 @@
 .bg {
   min-height: 100vh;
   width: 100vw;
-  background: url('/form.jpg') no-repeat center center/cover;
+  background: url("/form.jpg") no-repeat center center/cover;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -60,9 +60,9 @@
 
 .centerCard {
   margin-top: 10px;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 18px;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.1);
   padding: 2.5rem 2.5rem 2rem 2.5rem;
   max-width: 600px;
   width: 100%;
@@ -268,4 +268,4 @@
     align-items: flex-start;
     gap: 0.7rem;
   }
-} 
+}

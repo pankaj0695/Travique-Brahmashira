@@ -25,8 +25,8 @@ Plan a budget-friendly trip to ${city} ${daysText} for a traveler who prefers ${
 The total budget is ₹${budget}.
 
 Reply in valid JSON with these keys only: hotels, meals, itinerary, estimatedTotal, packingList.
-- hotels: array of at least 3 hotels (name, type, location, totalCost, features[])
-- meals: for breakfast, lunch, dinner (cuisineType, famousDish, minCost, recommendedRestaurants[])
+- hotels: array of at least 3 hotels (name, type, location, totalCost, link(To book that particular hotel), features[])
+- meals: for breakfast, lunch, dinner (cuisineType, famousDish, minCost, recommendedRestaurants[](with their googleMap location))
 - itinerary: day-wise plan with date labels, each place/activity with minTransportCost
 - estimatedTotal: object with breakdown and total
 - packingList: array of items based on weather

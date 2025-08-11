@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import styles from '../styles/PlanTrip.module.css';
-import { FaMapMarkerAlt, FaPlane, FaUserCircle } from 'react-icons/fa';
-import { useUser } from '../UserContext';
-import { useNavigate } from 'react-router-dom';
-import Footer from '../components/Footer/Footer';
+import React, { useState } from "react";
+import styles from "./PlanTrip.module.css";
+import { FaMapMarkerAlt, FaPlane, FaUserCircle } from "react-icons/fa";
+import { useUser } from "../UserContext";
+import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer/Footer";
 
 const PlanTrip = () => {
   const { user, setTripDetails } = useUser();
   const navigate = useNavigate();
-  const [destination, setDestination] = useState('');
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-  const [preferences, setPreferences] = useState(['relaxation']);
+  const [destination, setDestination] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [preferences, setPreferences] = useState(["relaxation"]);
   const [budget, setBudget] = useState(25000);
   const [minBudget, setMinBudget] = useState(5000);
   const [maxBudget, setMaxBudget] = useState(50000);
 
   const handlePreferenceChange = (e) => {
     const { value, checked } = e.target;
-    setPreferences(prev => {
+    setPreferences((prev) => {
       if (checked) {
         return [...prev, value];
       } else {
-        return prev.filter(item => item !== value);
+        return prev.filter((item) => item !== value);
       }
     });
   };
@@ -48,14 +48,19 @@ const PlanTrip = () => {
       checkin: checkIn,
       checkout: checkOut,
       preference: preferences,
-      budget
+      budget,
     });
-    navigate('/results');
+    navigate("/results");
   };
 
   const preferenceOptions = [
-    'adventure', 'culture', 'nature', 'food', 
-    'history', 'shopping', 'relaxation'
+    "adventure",
+    "culture",
+    "nature",
+    "food",
+    "history",
+    "shopping",
+    "relaxation",
   ];
 
   return (
@@ -63,7 +68,9 @@ const PlanTrip = () => {
       <div className={styles.bg}>
         <div className={styles.centerCard}>
           <h2 className={styles.title}>Plan Your Trip</h2>
-          <p className={styles.subtitle}>Tell us about your trip and let TravelBuddy take care of the rest.</p>
+          <p className={styles.subtitle}>
+            Tell us about your trip and let TravelBuddy take care of the rest.
+          </p>
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
               <label className={styles.inputLabel}>
@@ -72,7 +79,7 @@ const PlanTrip = () => {
                   type="text"
                   placeholder="Where would you like to go?"
                   value={destination}
-                  onChange={e => setDestination(e.target.value)}
+                  onChange={(e) => setDestination(e.target.value)}
                   className={styles.input}
                   required
                 />
@@ -84,7 +91,7 @@ const PlanTrip = () => {
                 <input
                   type="date"
                   value={checkIn}
-                  onChange={e => setCheckIn(e.target.value)}
+                  onChange={(e) => setCheckIn(e.target.value)}
                   className={styles.input}
                   required
                 />
@@ -94,7 +101,7 @@ const PlanTrip = () => {
                 <input
                   type="date"
                   value={checkOut}
-                  onChange={e => setCheckOut(e.target.value)}
+                  onChange={(e) => setCheckOut(e.target.value)}
                   className={styles.input}
                   required
                 />
@@ -103,7 +110,7 @@ const PlanTrip = () => {
             <div className={styles.preferenceSection}>
               <span className={styles.preferenceTitle}>Travel Preferences</span>
               <div className={styles.checkboxGroup}>
-                {preferenceOptions.map(option => (
+                {preferenceOptions.map((option) => (
                   <label key={option} className={styles.checkboxLabel}>
                     <input
                       type="checkbox"
@@ -158,7 +165,8 @@ const PlanTrip = () => {
             </button>
           </form>
           <div className={styles.infoText}>
-            Your information is secure and will only be used to create your personalized trip plan.
+            Your information is secure and will only be used to create your
+            personalized trip plan.
           </div>
         </div>
       </div>
@@ -167,4 +175,4 @@ const PlanTrip = () => {
   );
 };
 
-export default PlanTrip; 
+export default PlanTrip;
