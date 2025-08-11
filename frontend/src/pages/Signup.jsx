@@ -4,6 +4,8 @@ import styles from "./Signup.module.css";
 import Footer from "../components/Footer/Footer";
 import { useUser } from "../UserContext";
 import { backend_url } from "../utils/helper";
+import { FaSuitcase, FaUtensils } from "react-icons/fa";
+import { MdOutlineAttractions } from "react-icons/md"; // Ferris wheel alternative
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -111,7 +113,11 @@ const Signup = () => {
     <>
       <div className={styles.bg}>
         <div className={styles.centerBox}>
-          <div className={styles.icon}>✈️</div>
+          <div className={styles.icon} style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center" }}>
+            <FaSuitcase size={28} color="#007bff" title="Luggage" />
+            <FaUtensils size={26} color="#28a745" title="Food" />
+            <MdOutlineAttractions size={28} color="#ff9800" title="Ferris Wheel" />
+          </div>
           <h2 className={styles.title}>Join Travique</h2>
           <p className={styles.subtitle}>
             Create your free account to start planning
