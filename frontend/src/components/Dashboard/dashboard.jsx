@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useTheme } from '../../contexts/ThemeContext';
-import { useNavigate } from 'react-router-dom';
 import styles from "./dashboard.module.css";
 import banff from './assets/banff.webp'
 import santorini from './assets/santorini.jpeg'
@@ -70,8 +68,6 @@ const previousTrips = [
 
 export default function Dashboard() {
   const [bannerIdx, setBannerIdx] = useState(0);
-  const { isDarkMode } = useTheme();
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -81,7 +77,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className={isDarkMode ? styles.fullPageDashboard : `${styles.fullPageDashboard} ${styles.lightDashboard}`}>
+    <div className={styles.fullPageDashboard}>
       <header className={styles.header}>
        
       </header>
@@ -134,7 +130,7 @@ export default function Dashboard() {
         </div>
       </section>
       <div className={styles.planTripBtnContainerFull}>
-        <button className={styles.planTripBtn} onClick={() => navigate('/plan')}>+ Plan a trip</button>
+        <button className={styles.planTripBtn}>+ Plan a trip</button>
       </div>
     </div>
   );

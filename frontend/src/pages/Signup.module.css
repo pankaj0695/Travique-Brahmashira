@@ -1,7 +1,7 @@
 .bg {
   min-height: calc(100vh - var(--navbar-height));
   width: 100%;
-  background: linear-gradient(160deg, #ecfdf5 0%, #87baee 20%, #4b2cbb 40%, #2b09b5 60%, #100667 80%, #340fba 100%);
+  background: linear-gradient(160deg, #ecfdf5 0%, #a7f3d0 20%, #10b981 40%, #059669 60%, #047857 80%, #064e3b 100%);
   position: relative;
   overflow: hidden;
   /* fresh nature adventure vibes */

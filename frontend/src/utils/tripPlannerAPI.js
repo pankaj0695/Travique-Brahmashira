@@ -1,19 +1,19 @@
 import { backend_url } from "./helper";
 
-export async function getTripSuggestions({
+export async function generateTrip({
   city,
-  checkIn,
-  checkOut,
+  checkin,
+  checkout,
   preference,
   budget,
 }) {
-  const response = await fetch(`${backend_url}/api/deepseek-trip`, {
+  const response = await fetch(`${backend_url}/api/trips/generate-trip`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       city,
-      checkin: checkIn,
-      checkout: checkOut,
+      checkin,
+      checkout,
       preference,
       budget,
     }),
@@ -24,12 +24,6 @@ export async function getTripSuggestions({
   }
 
   const data = await response.json();
-  // Extract the model's reply (should be JSON string)
-  const content = data.choices?.[0]?.message?.content;
-  try {
-    return JSON.parse(content);
-  } catch (e) {
-    // fallback: return raw content
-    return content;
-  }
+
+  return data;
 }

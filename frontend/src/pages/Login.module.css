@@ -6,8 +6,8 @@
   overflow: hidden;
   /* Theme-aware background patterns */
   background-image:
-    radial-gradient(ellipse at 15% 85%, rgba(85, 180, 220, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 85% 15%, rgba(25, 124, 217, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 85%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 15%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 50% 20%, var(--border-color) 0%, transparent 30%);
   background-size: 600px 400px, 500px 600px, 800px 200px;
   background-position: 0% 0%, 100% 100%, center top;

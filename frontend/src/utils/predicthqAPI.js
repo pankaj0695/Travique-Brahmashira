@@ -4,7 +4,7 @@ import { backend_url } from "./helper";
 
 /* Call our backend */
 export async function fetchPredictHQEvents(city, checkin, checkout) {
-  const res = await fetch(`${backend_url}/api/predicthq-events`, {
+  const res = await fetch(`${backend_url}/api/trips/predicthq-events`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ city, checkin, checkout }),
@@ -30,8 +30,8 @@ export function getEventCategoryIcon(cat) {
 
 export function getAttendanceLabel(num = 0) {
   if (num < 100) return "Small event (< 100)";
-  if (num < 1000) return "Medium event (100‑1K)";
-  if (num < 10000) return "Large event (1K‑10K)";
+  if (num < 1000) return "Medium event (100-1K)";
+  if (num < 10000) return "Large event (1K-10K)";
   return "Massive event (10K+)";
 }
 
