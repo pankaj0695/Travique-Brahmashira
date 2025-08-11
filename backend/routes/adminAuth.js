@@ -3,29 +3,54 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const verifyAdminToken = require("../middleware/adminMiddleware");
-
 
 // Admin Register
 router.post("/register", async (req, res) => {
   try {
-    const { name, emailId, password, phoneno, city, state, country, bio, image } = req.body;
-    if (!name || !emailId || !password || !phoneno || !city || !state || !country) {
-      return res.status(400).json({ message: "Required fields: name, email, password, phone, city, state, country" });
+    const {
+      name,
+      emailId,
+      password,
+      phoneno,
+      city,
+      state,
+      country,
+      bio,
+      image,
+    } = req.body;
+    if (
+      !name ||
+      !emailId ||
+      !password ||
+      !phoneno ||
+      !city ||
+      !state ||
+      !country
+    ) {
+      return res
+        .status(400)
+        .json({
+          message:
+            "Required fields: name, email, password, phone, city, state, country",
+        });
     }
-    
+
     // Check if admin with this email already exists
     const existingAdminEmail = await User.findOne({ emailId, role: "admin" });
     if (existingAdminEmail) {
-      return res.status(409).json({ message: "Admin with this email already exists." });
+      return res
+        .status(409)
+        .json({ message: "Admin with this email already exists." });
     }
-    
+
     // Check if user with this phone number already exists
     const existingPhone = await User.findOne({ phoneno });
     if (existingPhone) {
-      return res.status(409).json({ message: "User with this phone number already exists." });
+      return res
+        .status(409)
+        .json({ message: "User with this phone number already exists." });
     }
-    
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const admin = new User({
       name,
@@ -63,12 +88,12 @@ router.post("/register", async (req, res) => {
     });
   } catch (err) {
     console.error("Admin registration error:", err); // Add detailed logging
-    res.status(500).json({ 
+    res.status(500).json({
       message: "Server error.",
       error: err.message,
-      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-  });
-}
+      stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
+    });
+  }
 });
 
 // Admin Login
@@ -110,7 +135,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Get all users
-router.get("/users", verifyAdminToken, async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     const users = await User.find({ role: "user" }).select("-password");
     res.status(200).json({ users });
@@ -120,7 +145,7 @@ router.get("/users", verifyAdminToken, async (req, res) => {
 });
 
 // Get all admins
-router.get("/admins", verifyAdminToken, async (req, res) => {
+router.get("/admins", async (req, res) => {
   try {
     const admins = await User.find({
       role: { $in: ["admin", "superadmin"] },
