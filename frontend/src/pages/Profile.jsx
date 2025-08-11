@@ -113,6 +113,7 @@ const Profile = () => {
   };
 
   const viewTripDetails = (trip) => {
+    console.log("View trip details clicked", trip);
     setSelectedTrip(trip);
     setShowTripModal(true);
   };
@@ -244,7 +245,8 @@ const Profile = () => {
                     </div>
                     <div className={styles.tripInfoItem}>
                       <FaRupeeSign />
-                      <strong>Budget:</strong> {trip.budget.toLocaleString()}
+                      <strong>Budget:</strong>{" "}
+                      {trip.budget ? trip.budget.toLocaleString() : "N/A"}
                     </div>
                   </div>
 
@@ -267,13 +269,20 @@ const Profile = () => {
 
       {/* Trip Details Modal */}
       {showTripModal && selectedTrip && (
-        <div className={styles.modal}>
+        <div
+          className={styles.modal}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowTripModal(false);
+            }
+          }}
+        >
           <div className={styles.modalContent}>
             <button
               onClick={() => setShowTripModal(false)}
               className={styles.closeButton}
             >
-              ×
+              <FaTimes />
             </button>
 
             <h2 className={styles.modalTitle}>
@@ -303,7 +312,10 @@ const Profile = () => {
               <div className={styles.tripDetailItem}>
                 <div className={styles.tripDetailLabel}>Budget</div>
                 <div className={styles.tripDetailValue}>
-                  ₹{selectedTrip.budget.toLocaleString()}
+                  ₹
+                  {selectedTrip.budget
+                    ? selectedTrip.budget.toLocaleString()
+                    : "N/A"}
                 </div>
               </div>
             </div>
