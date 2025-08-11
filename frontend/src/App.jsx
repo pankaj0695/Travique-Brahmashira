@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "./contexts/ThemeContext";
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import HowItWorks from "./components/HowItWorks/HowItWorks";
@@ -29,7 +28,7 @@ function Home() {
 
 function App() {
   return (
-    <ThemeProvider>
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -43,7 +42,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/posts" element={<Blog />} />
       </Routes>
-    </ThemeProvider>
+    </>
   );
 }
 

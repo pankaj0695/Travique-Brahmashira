@@ -3,7 +3,7 @@ const Blog = require("../models/Blog");
 // Create a blog (no auth for now)
 exports.createBlog = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, image } = req.body;
 
     if (!title || !content) {
       return res.status(400).json({ message: "Title and content are required" });
@@ -12,18 +12,19 @@ exports.createBlog = async (req, res) => {
     const newBlog = new Blog({
       title,
       content,
-    //   author: req.user._id, // Automatically from logged-in user
+      image: image || undefined,
+      // author: req.user._id, // Automatically from logged-in user when auth added
     });
 
     await newBlog.save();
     res.status(201).json({
       message: "Blog created successfully",
-      blog: newBlog
+      blog: newBlog,
     });
   } catch (error) {
     res.status(500).json({
       message: "Error creating blog",
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -64,9 +65,11 @@ exports.updateBlog = async (req, res) => {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    blog.title = req.body.title || blog.title;
-    blog.content = req.body.content || blog.content;
-    blog.author = req.body.author || blog.author; // allow updating author for now
+    const { title, content, image, author } = req.body;
+    if (title !== undefined) blog.title = title;
+    if (content !== undefined) blog.content = content;
+    if (image !== undefined) blog.image = image; // base64 / URL string
+    if (author !== undefined) blog.author = author; // for now
 
     await blog.save();
     res.status(200).json({ message: "Blog updated successfully", blog });

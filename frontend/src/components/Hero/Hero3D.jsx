@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useUser } from '../../UserContext';
 import styles from './Hero3D.module.css';
 
@@ -44,14 +43,13 @@ function AnimatedParticles() {
 }
 
 function Atmosphere() {
-  const { isDarkMode } = useTheme();
   return (
     <mesh scale={[1.06, 1.06, 1.06]}> 
       <sphereGeometry args={[1.5, 64, 64]} />
       <meshBasicMaterial 
-        color={isDarkMode ? "#38bdf8" : "#0ea5e9"} 
+        color="#0ea5e9" 
         transparent 
-        opacity={isDarkMode ? 0.12 : 0.08} 
+        opacity={0.08} 
         side={THREE.BackSide} 
       />
     </mesh>
@@ -59,7 +57,6 @@ function Atmosphere() {
 }
 
 function Globe() {
-  const { isDarkMode } = useTheme();
   const meshRef = useRef();
   
   useFrame((state) => {
@@ -72,21 +69,12 @@ function Globe() {
     <group ref={meshRef}>
       <mesh castShadow receiveShadow>
         <sphereGeometry args={[1.5, 64, 64]} />
-        <meshStandardMaterial 
-          color={isDarkMode ? "#475569" : "#93c5fd"} 
-          metalness={0.15} 
-          roughness={0.9} 
-        />
+  <meshStandardMaterial color="#93c5fd" metalness={0.15} roughness={0.9} />
       </mesh>
       {/* Stylized meridians/parallels */}
       <mesh>
         <sphereGeometry args={[1.502, 32, 32]} />
-        <meshBasicMaterial 
-          color={isDarkMode ? "#38bdf8" : "#60a5fa"} 
-          wireframe 
-          transparent 
-          opacity={isDarkMode ? 0.4 : 0.35} 
-        />
+  <meshBasicMaterial color="#60a5fa" wireframe transparent opacity={0.35} />
       </mesh>
       <Atmosphere />
     </group>
@@ -104,11 +92,7 @@ function latLonToVec3(lat, lon, radius = 1.5) {
 
 // Floating elements around globe
 function FloatingElements() {
-  const { isDarkMode } = useTheme();
-  const colors = isDarkMode 
-    ? ['#ef4444', '#10b981', '#3b82f6', '#8b5cf6']
-    : ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'];
-  
+  const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'];
   return (
     <>
       {colors.map((color, index) => (
@@ -143,8 +127,7 @@ function FloatingElement({ color, index }) {
 }
 
 function Arc({ from = [40.7, -74], to = [51.5, -0.12], color }) {
-  const { isDarkMode } = useTheme();
-  const arcColor = color || (isDarkMode ? '#38bdf8' : '#22d3ee');
+  const arcColor = color || '#22d3ee';
   
   const start = useMemo(() => latLonToVec3(from[0], from[1]), [from]);
   const end = useMemo(() => latLonToVec3(to[0], to[1]), [to]);
@@ -162,7 +145,6 @@ function Arc({ from = [40.7, -74], to = [51.5, -0.12], color }) {
 }
 
 function Plane({ radius = 1.8, speed = 0.4 }) {
-  const { isDarkMode } = useTheme();
   const ref = useRef();
   
   useFrame((_, delta) => {
@@ -176,8 +158,8 @@ function Plane({ radius = 1.8, speed = 0.4 }) {
     ref.current.lookAt(0, 0, 0);
   });
 
-  const planeColor = isDarkMode ? "#38bdf8" : "#0284c7";
-  const wingColor = isDarkMode ? "#cbd5e1" : "#bae6fd";
+  const planeColor = "#0284c7";
+  const wingColor = "#bae6fd";
 
   return (
     <group ref={ref}>
@@ -202,7 +184,6 @@ function Plane({ radius = 1.8, speed = 0.4 }) {
 }
 
 function Scene() {
-  const { isDarkMode } = useTheme();
   const group = useRef();
   
   useFrame((state, delta) => {
@@ -233,7 +214,6 @@ function Scene() {
 
 // Enhanced Hero3D component with animations
 export default function Hero3D() {
-  const { isDarkMode } = useTheme();
   const { user } = useUser();
   const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -273,13 +253,9 @@ export default function Hero3D() {
             dpr={[1, 2]}
             className={styles.canvas}
           > 
-            <color attach="background" args={[isDarkMode ? "#0f172a" : "#ffffff"]} />
-            <ambientLight intensity={isDarkMode ? 0.5 : 0.7} />
-            <directionalLight 
-              position={[5, 5, 5]} 
-              intensity={isDarkMode ? 0.4 : 0.6} 
-              castShadow 
-            />
+            <color attach="background" args={["#ffffff"]} />
+            <ambientLight intensity={0.7} />
+            <directionalLight position={[5, 5, 5]} intensity={0.6} castShadow />
             <Scene />
           </Canvas>
           
