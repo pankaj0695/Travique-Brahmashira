@@ -4,43 +4,37 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
-// Middleware to verify admin token
-const verifyAdminToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ message: "No token provided" });
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
-    if (decoded.role !== "admin" && decoded.role !== "superadmin") {
-      return res
-        .status(403)
-        .json({ message: "Access denied. Admin role required." });
-    }
-    req.admin = decoded;
-    next();
-  } catch (err) {
-    return res.status(401).json({ message: "Invalid token" });
-  }
-};
-
 // Admin Register
 router.post("/register", async (req, res) => {
   try {
-    const { name, emailId, password } = req.body;
-    if (!name || !emailId || !password) {
-      return res.status(400).json({ message: "All fields are required." });
+    const { name, emailId, password, phoneno, city, state, country, bio, image } = req.body;
+    if (!name || !emailId || !password || !phoneno || !city || !state || !country) {
+      return res.status(400).json({ message: "Required fields: name, email, password, phone, city, state, country" });
     }
-    const existingAdmin = await User.findOne({ emailId, role: "admin" });
-    if (existingAdmin) {
-      return res.status(409).json({ message: "Admin already exists." });
+    
+    // Check if admin with this email already exists
+    const existingAdminEmail = await User.findOne({ emailId, role: "admin" });
+    if (existingAdminEmail) {
+      return res.status(409).json({ message: "Admin with this email already exists." });
     }
+    
+    // Check if user with this phone number already exists
+    const existingPhone = await User.findOne({ phoneno });
+    if (existingPhone) {
+      return res.status(409).json({ message: "User with this phone number already exists." });
+    }
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const admin = new User({
       name,
       emailId,
       password: hashedPassword,
+      phoneno,
+      city,
+      state,
+      country,
+      bio: bio || "",
+      image: image || "",
       role: "admin",
     });
     await admin.save();
@@ -56,12 +50,23 @@ router.post("/register", async (req, res) => {
         id: admin._id,
         name: admin.name,
         emailId: admin.emailId,
+        phoneno: admin.phoneno,
+        city: admin.city,
+        state: admin.state,
+        country: admin.country,
+        bio: admin.bio,
+        image: admin.image,
         role: admin.role,
       },
     });
   } catch (err) {
-    res.status(500).json({ message: "Server error.", error: err.message });
-  }
+    console.error("Admin registration error:", err); // Add detailed logging
+    res.status(500).json({ 
+      message: "Server error.",
+      error: err.message,
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
+}
 });
 
 // Admin Login

@@ -4,19 +4,56 @@ import styles from "./AdminRegister.module.css";
 
 const AdminRegister = ({ onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    emailId: "",
-    password: "",
-    confirmPassword: "",
-  });
+      name: "",
+      emailId: "",
+      password: "",
+      confirmPassword: "",
+      phoneno: "",
+      city: "",
+      state: "",
+      country: "",
+      bio: "",
+    });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
 
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setImageUploading(true);
+    setError("");
+    setImagePreview(URL.createObjectURL(file));
+    const formDataCloud = new FormData();
+    formDataCloud.append("file", file);
+    formDataCloud.append("upload_preset", "Travique");
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dnfkcjujc/image/upload",
+        {
+          method: "POST",
+          body: formDataCloud,
+        }
+      );
+      const data = await res.json();
+      if (data.secure_url) {
+        setFormData((prev) => ({ ...prev, image: data.secure_url }));
+      } else {
+        setError("Image upload failed");
+      }
+    } catch (err) {
+      setError("Image upload error");
+    } finally {
+      setImageUploading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -71,6 +108,32 @@ const AdminRegister = ({ onClose, onSuccess }) => {
           {error && <div className={styles.error}>{error}</div>}
 
           <div className={styles.inputGroup}>
+            <label>Profile Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              disabled={imageUploading}
+            />
+            {imageUploading && (
+              <div style={{ color: "#22d3ee" }}>Uploading image...</div>
+            )}
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="Preview"
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: "50%",
+                  marginTop: "0.5rem",
+                  objectFit: "cover"
+                }}
+              />
+            )}
+          </div>
+
+          <div className={styles.inputGroup}>
             <label>Full Name</label>
             <input
               type="text"
@@ -91,6 +154,65 @@ const AdminRegister = ({ onClose, onSuccess }) => {
               value={formData.emailId}
               onChange={handleInputChange}
               required
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label>Phone Number</label>
+            <input
+              type="tel"
+              name="phoneno"
+              placeholder="Enter admin's phone number"
+              value={formData.phoneno}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label>City</label>
+            <input
+              type="text"
+              name="city"
+              placeholder="Enter admin's city"
+              value={formData.city}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label>State</label>
+            <input
+              type="text"
+              name="state"
+              placeholder="Enter admin's state"
+              value={formData.state}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label>Country</label>
+            <input
+              type="text"
+              name="country"
+              placeholder="Enter admin's country"
+              value={formData.country}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label>Bio (Optional)</label>
+            <textarea
+              name="bio"
+              placeholder="Tell us about the admin"
+              value={formData.bio}
+              onChange={handleInputChange}
+              rows="3"
             />
           </div>
 
