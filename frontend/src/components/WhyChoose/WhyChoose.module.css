@@ -1,8 +1,14 @@
 .whyChoose {
-    padding: 4rem 2rem;
-    text-align: center;
-    background-color: #ffffff;
-    color: #0f172a;
+        padding: 4rem 2rem;
+        text-align: center;
+        background-color: #ffffff;
+        /* subtle grid */
+        background-image:
+            linear-gradient(rgba(2, 6, 23, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(2, 6, 23, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px, 40px 40px;
+        background-position: top left;
+        color: #0f172a;
 }
 
 .title {

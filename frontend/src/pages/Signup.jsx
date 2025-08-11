@@ -202,6 +202,7 @@ const Signup = () => {
             />
             <label>Bio (Optional)</label>
             <textarea
+              type="text"
               name="bio"
               placeholder="Tell us about yourself"
               value={formData.bio}

@@ -17,7 +17,8 @@ const ContactUs = () => {
 
   return (
     <>
-      <div className={styles.contactContainer}>
+      <div className={styles.contactPageBg}>
+        <div className={styles.contactContainer}>
         <h1 className={styles.contactHeading}>Contact Us</h1>
         {submitted ? (
           <div style={{ color: '#2e7d32', textAlign: 'center', fontWeight: 500 }}>
@@ -31,6 +32,7 @@ const ContactUs = () => {
             <button type="submit">Send Message</button>
           </form>
         )}
+        </div>
       </div>
       <div style={{ maxWidth: "100%", margin: "0 auto" }}>
         <Footer />
