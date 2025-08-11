@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import PlanTrip from "./pages/PlanTrip";
 import TripSuggestions from "./pages/TripSuggestions";
+import UpdateTrip from "./pages/UpdateTrip";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import Dashboard from "./components/Dashboard/dashboard";
@@ -38,6 +39,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/plan" element={<PlanTrip />} />
         <Route path="/results" element={<TripSuggestions />} />
+        <Route path="/update-trip/:tripId" element={<UpdateTrip />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/dashboard" element={<Dashboard />} />

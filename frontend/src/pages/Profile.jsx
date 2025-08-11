@@ -10,6 +10,9 @@ import {
   FaEye,
   FaSuitcase,
   FaSignOutAlt,
+  FaEdit,
+  FaShare,
+  FaTimes,
 } from "react-icons/fa";
 import Footer from "../components/Footer/Footer";
 import TripSuggestionCard from "../components/TripSuggestionCard";
@@ -31,62 +34,6 @@ const Profile = () => {
       fetchPastTrips();
     }
   }, [user]);
-
-  // Dummy content for Past Trip Suggestions
-  useEffect(() => {
-    if (!user?._id) return;
-    // If no trips, set dummy data for demo
-    if (pastTrips.length === 0 && !loading && !error) {
-      setPastTrips([
-        {
-          _id: "dummy1",
-          city: "Paris",
-          checkIn: "2024-05-10",
-          checkOut: "2024-05-15",
-          preference: "Romantic, Culture",
-          budget: 120000,
-          createdAt: "2024-04-20",
-          suggestions: [
-            {
-              title: "Eiffel Tower",
-              description: "Visit the iconic landmark.",
-            },
-            {
-              title: "Louvre Museum",
-              description: "Explore world-class art.",
-            },
-            {
-              title: "Seine River Cruise",
-              description: "Enjoy a scenic boat ride.",
-            },
-          ],
-        },
-        {
-          _id: "dummy2",
-          city: "Tokyo",
-          checkIn: "2024-06-01",
-          checkOut: "2024-06-07",
-          preference: "Food, Technology",
-          budget: 150000,
-          createdAt: "2024-05-10",
-          suggestions: [
-            {
-              title: "Tsukiji Market",
-              description: "Try fresh sushi.",
-            },
-            {
-              title: "Akihabara",
-              description: "Experience tech and anime culture.",
-            },
-            {
-              title: "Shibuya Crossing",
-              description: "See the world's busiest crossing.",
-            },
-          ],
-        },
-      ]);
-    }
-  }, [user, pastTrips.length, loading, error]);
 
   const fetchPastTrips = async () => {
     setLoading(true);
@@ -134,6 +81,35 @@ const Profile = () => {
     } catch (err) {
       alert("Error deleting trip");
     }
+  };
+
+  const shareTrip = async (tripId) => {
+    try {
+      const response = await fetch(
+        `${backend_url}/api/trips/shareTrip/${tripId}`,
+        {
+          method: "PUT",
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setPastTrips((prev) =>
+          prev.map((trip) =>
+            trip._id === tripId ? { ...trip, shared: true } : trip
+          )
+        );
+        alert("Trip shared successfully!");
+      } else {
+        alert("Failed to share trip");
+      }
+    } catch (err) {
+      alert("Error sharing trip");
+    }
+  };
+
+  const updateTrip = (tripId) => {
+    navigate(`/update-trip/${tripId}`);
   };
 
   const viewTripDetails = (trip) => {
@@ -229,7 +205,13 @@ const Profile = () => {
           ) : pastTrips.length === 0 ? (
             <div className={styles.emptyState}>
               <FaSuitcase className={styles.emptyStateIcon} />
-              <p>No past trips found. Plan your first trip to see it here!</p>
+              <p>No past trips found.</p>
+              <button
+                onClick={() => navigate("/plan")}
+                className={styles.planNewTripBtn}
+              >
+                Plan a new trip
+              </button>
             </div>
           ) : (
             <div className={styles.tripsGrid}>
@@ -329,6 +311,22 @@ const Profile = () => {
             <div>
               <h3 className={styles.suggestionsTitle}>Trip Suggestions</h3>
               <TripSuggestionCard suggestions={selectedTrip.suggestions} />
+            </div>
+
+            <div className={styles.modalActions}>
+              <button
+                onClick={() => updateTrip(selectedTrip._id)}
+                className={styles.updateButton}
+              >
+                <FaEdit /> Update
+              </button>
+              <button
+                onClick={() => shareTrip(selectedTrip._id)}
+                className={styles.shareButton}
+                disabled={selectedTrip.shared}
+              >
+                <FaShare /> {selectedTrip.shared ? "Shared" : "Share"}
+              </button>
             </div>
           </div>
         </div>
