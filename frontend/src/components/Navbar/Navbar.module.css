@@ -1,29 +1,26 @@
+/* Clean, valid styles for light-themed navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(2, 6, 23, 0.08);
   position: sticky;
   top: 0;
   z-index: 1000;
+  color: #0f172a;
 }
 
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
+  color: #0f172a;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-weight: bold;
 }
-
-.logoImg {
-  height: 80px;
-  margin: -10px 0;
-}
+.logo a { text-decoration: none; color: inherit; }
 
 .navLinks {
   list-style: none;
@@ -33,91 +30,14 @@
   padding: 0;
   margin-left: 40px;
 }
-
 .navLinks li a {
   text-decoration: none;
-  color: #222;
+  color: #334155;
   font-weight: 500;
   transition: color 0.2s;
 }
-
-.navLinks li a:hover {
-  color: #007bff;
-}
-
-.exploreLink {
-  font-weight: bold;
-  color: #007bff;
-}
-
-.buttons {
-  display: flex;
-  gap: 1rem;
-}
-
-.buttons button {
-  padding: 0.5rem 1.2rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1rem;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.loginBtn {
-  background-color: #007bff;
-  color: white;
-  border: 1px solid #007bff;
-}
-
-.loginBtn:hover,
-.loginBtn.active {
-  background-color: #0056b3;
-}
-
-.signupBtn {
-  background-color: white;
-  color: #333;
-  border: 1px solid black;
-}
-
-.signupBtn:hover,
-.signupBtn.active {
-  background-color: white;
-}
-
-.userEmail {
-  font-size: 1rem;
-  color: #333;
-  margin-right: 0.7rem;
-  font-weight: 500;
-}
-
-.profileBtn {
-  background-color: #ffc107;
-  color: #333;
-  border: 1px solid #ccc;
-  margin-right: 0.5rem;
-}
-
-.profileBtn:hover,
-.profileBtn.active {
-  background-color: #ddd;
-}
-
-.logoutBtn {
-  background-color: #fff;
-  color: #d32f2f;
-  border: 1px solid #d32f2f;
-  font-weight: bold;
-  margin-left: 0.5rem;
-}
-
-.logoutBtn:hover {
-  background-color: #d32f2f;
-  color: #fff;
-}
+.navLinks li a:hover { color: #0284c7; }
+.exploreLink { font-weight: 600; color: #0284c7; }
 
 .profileRight {
   display: flex;
@@ -126,56 +46,55 @@
   gap: 1rem;
 }
 
-.userName {
+.loginBtn,
+.signupBtn {
+  padding: 0.5rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
   font-size: 1rem;
-  color: #333;
-  font-weight: 500;
-  margin-right: 0.7rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
-.userInfo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.loginBtn {
+  background-color: transparent;
+  color: #0284c7;
+  border: 1px solid #0284c7;
 }
+.loginBtn:hover,
+.loginBtn.active { background-color: #0284c7; color: #ffffff; }
 
-.userInfoLink {
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.2s, opacity 0.2s;
+.signupBtn {
+  background-color: #0ea5e9;
+  color: #ffffff;
+  border: 1px solid #0ea5e9;
 }
+.signupBtn:hover,
+.signupBtn.active { background-color: #0284c7; border-color: #0284c7; }
 
-.userInfoLink:hover {
-  transform: translateY(-1px);
-  opacity: 0.8;
-}
+.userInfo { display: flex; align-items: center; gap: 0.5rem; }
+.userInfoLink { text-decoration: none; color: inherit; transition: transform 0.2s, opacity 0.2s; }
+.userInfoLink:hover { transform: translateY(-1px); opacity: 0.8; }
 
 .userAvatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #007bff;
+  border: 2px solid #0284c7;
   cursor: pointer;
   transition: border-color 0.2s;
 }
+.userAvatar:hover { border-color: #0369a1; }
 
-.userAvatar:hover {
-  border-color: #0056b3;
-}
+.userName { font-size: 1rem; color: #334155; font-weight: 500; margin-right: 0.7rem; }
+
+/* Export an empty active class so CSS modules can combine it with button styles */
+.active { outline: none; }
+
 @media (max-width: 900px) {
-  .navLinks {
-    gap: 1rem;
-  }
-  .buttons {
-    gap: 0.5rem;
-  }
-  .userInfo {
-    gap: 0.3rem;
-  }
-  .userName {
-    margin-right: 0.3rem;
-  }
+  .navLinks { gap: 1rem; }
+  .profileRight { gap: 0.75rem; }
 }
 
 @media (max-width: 700px) {
@@ -184,23 +103,8 @@
     align-items: flex-start;
     padding: 1rem;
   }
-  .navLinks {
-    margin-top: 0.5rem;
-    gap: 0.7rem;
-  }
-  .buttons {
-    margin-top: 0.5rem;
-  }
-  .profileRight {
-    margin-top: 0.5rem;
-    margin-left: 0;
-  }
-  .userAvatar {
-    width: 35px;
-    height: 35px;
-  }
-  .userName {
-    font-size: 0.9rem;
-    margin-right: 0.5rem;
-  }
+  .navLinks { margin-top: 0.5rem; gap: 0.7rem; }
+  .profileRight { margin-top: 0.5rem; }
+  .userAvatar { width: 35px; height: 35px; }
+  .userName { font-size: 0.9rem; margin-right: 0.5rem; }
 }
