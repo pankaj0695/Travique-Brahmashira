@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const mongoose = require("mongoose");
+const blogRoutes = require("./routes/blogRoutes");
+
 require("dotenv").config();
 
 const PastTrip = require("./models/PastTrip");
@@ -25,12 +27,14 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+
 // Use route files
 
 app.use("/api/auth", userAuthRoutes);
 app.use("/api/admin", adminAuthRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/images", imageRoutes);
+app.use("/api/blogs", blogRoutes);
 
 // MongoDB Connection
 mongoose

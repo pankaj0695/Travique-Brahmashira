@@ -51,7 +51,7 @@ const Login = () => {
         <h2 className={styles.title}>Travique Admin</h2>
         <p className={styles.subtitle}>Welcome to Admin Panel</p>
         <p className={styles.desc}>Log in to manage the platform</p>
-        {error && <div style={{ color: "red", marginBottom: 8 }}>{error}</div>}
+        {error && <div className={styles.errorMessage}>{error}</div>}
         <form className={styles.form} onSubmit={handleLogin}>
           <label>Email</label>
           <input

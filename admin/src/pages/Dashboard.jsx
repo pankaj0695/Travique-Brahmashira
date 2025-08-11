@@ -58,6 +58,17 @@ const Dashboard = () => {
     logoutAdmin();
   };
 
+  // Filter admins based on current admin's role
+  const getFilteredAdmins = () => {
+    return admins.filter((adminUser) => {
+      // If current admin is not a superadmin, hide superadmins from the list
+      if (admin?.role !== "superadmin" && adminUser.role === "superadmin") {
+        return false;
+      }
+      return true;
+    });
+  };
+
   if (loading) {
     return <div className={styles.loading}>Loading dashboard...</div>;
   }
@@ -93,7 +104,7 @@ const Dashboard = () => {
             }`}
             onClick={() => setActiveTab("admins")}
           >
-            Admins ({admins.length})
+            Admins ({getFilteredAdmins().length})
           </button>
         </div>
 
@@ -162,7 +173,7 @@ const Dashboard = () => {
           ) : (
             <div>
               <h2>Admins</h2>
-              {admins.length === 0 ? (
+              {getFilteredAdmins().length === 0 ? (
                 <p>No admins found.</p>
               ) : (
                 <table className={styles.table}>
@@ -175,7 +186,7 @@ const Dashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {admins.map((adminUser) => (
+                    {getFilteredAdmins().map((adminUser) => (
                       <tr key={adminUser._id}>
                         <td>{adminUser.name}</td>
                         <td>{adminUser.emailId}</td>
