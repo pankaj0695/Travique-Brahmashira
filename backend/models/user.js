@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 const { Schema } = mongoose;
 
@@ -114,7 +114,10 @@ userSchema.methods.generateEmailOtp = function () {
 
 // 🔹 Verify provided OTP
 userSchema.methods.verifyEmailOtp = function (enteredOtp) {
-  const hashedEnteredOtp = crypto.createHash("sha256").update(enteredOtp).digest("hex");
+  const hashedEnteredOtp = crypto
+    .createHash("sha256")
+    .update(enteredOtp)
+    .digest("hex");
   const isMatch = hashedEnteredOtp === this.emailOtp;
   const notExpired = Date.now() < this.emailOtpExpires;
   return isMatch && notExpired;

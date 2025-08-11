@@ -181,6 +181,19 @@ tripRouter.post("/saveTrip", async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    // Prevent duplicate save for same user + trip window + city
+    const existing = await PastTrip.findOne({
+      userId,
+      city,
+      checkIn,
+      checkOut,
+    });
+    if (existing) {
+      return res
+        .status(200)
+        .json({ success: true, trip: existing, duplicate: true });
+    }
+
     const newTrip = new PastTrip({
       userId,
       city,
@@ -193,7 +206,7 @@ tripRouter.post("/saveTrip", async (req, res) => {
 
     const savedTrip = await newTrip.save();
     console.log("✅ Trip saved:", savedTrip._id);
-    res.status(201).json({ success: true, trip: savedTrip });
+    res.status(201).json({ success: true, trip: savedTrip, duplicate: false });
   } catch (error) {
     console.error("❌ Error in saveTrip:", error);
     res

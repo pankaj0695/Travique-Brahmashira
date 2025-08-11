@@ -28,7 +28,7 @@ const Profile = () => {
   // Fetch past trips when user is available
   useEffect(() => {
     if (user?._id) {
-      // fetchPastTrips();
+      fetchPastTrips();
     }
   }, [user]);
 
@@ -88,25 +88,25 @@ const Profile = () => {
     }
   }, [user, pastTrips.length, loading, error]);
 
-  // const fetchPastTrips = async () => {
-  //   setLoading(true);
-  //   setError(null);
-  //   try {
-  //     const response = await fetch(
-  //       `${backend_url}/api/getPastTrips/${user._id}`
-  //     );
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setPastTrips(data.trips || []);
-  //     } else {
-  //       setError("Failed to fetch past trips");
-  //     }
-  //   } catch (err) {
-  //     setError("Error connecting to server");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const fetchPastTrips = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(
+        `${backend_url}/api/trips/getPastTrips/${user._id}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setPastTrips(data.trips || []);
+      } else {
+        setError("Failed to fetch past trips");
+      }
+    } catch (err) {
+      setError("Error connecting to server");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogout = async () => {
     if (window.confirm("Are you sure you want to logout?")) {
@@ -119,12 +119,15 @@ const Profile = () => {
     if (!window.confirm("Are you sure you want to delete this trip?")) return;
 
     try {
-      const response = await fetch(`${backend_url}/api/deleteTrip/${tripId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${backend_url}/api/trips/deleteTrip/${tripId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
-        setPastTrips(pastTrips.filter((trip) => trip._id !== tripId));
+        setPastTrips((prev) => prev.filter((trip) => trip._id !== tripId));
       } else {
         alert("Failed to delete trip");
       }

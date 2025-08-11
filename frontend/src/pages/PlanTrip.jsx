@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styles from "./PlanTrip.module.css";
 import {
   FaMapMarkerAlt,
@@ -18,8 +18,22 @@ const PlanTrip = () => {
   const { user, setTripDetails } = useUser();
   const navigate = useNavigate();
   const [destination, setDestination] = useState("");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
+  // Date helpers to ensure correct local date formatting
+  const formatDateLocal = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
+  const addDays = (dateStr, days) => {
+    const d = new Date(dateStr);
+    d.setDate(d.getDate() + days);
+    return formatDateLocal(d);
+  };
+  const today = useMemo(() => formatDateLocal(new Date()), []);
+
+  const [checkIn, setCheckIn] = useState(today);
+  const [checkOut, setCheckOut] = useState(addDays(today, 1));
   const [preferences, setPreferences] = useState(["relaxation"]);
   const [budget, setBudget] = useState(25000);
   const [minBudget, setMinBudget] = useState(5000);
@@ -159,6 +173,11 @@ const PlanTrip = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Guard: ensure checkout is after checkin
+    if (!checkIn || !checkOut || checkOut <= checkIn) {
+      setError("Checkout date must be after check-in date.");
+      return;
+    }
     setTripDetails({
       city,
       country,
@@ -293,7 +312,17 @@ const PlanTrip = () => {
                 <input
                   type="date"
                   value={checkIn}
-                  onChange={(e) => setCheckIn(e.target.value)}
+                  min={today}
+                  onChange={(e) => {
+                    const newIn = e.target.value;
+                    setCheckIn(newIn);
+                    // Auto adjust checkout if now invalid
+                    if (!checkOut || checkOut <= newIn) {
+                      setCheckOut(addDays(newIn, 1));
+                    }
+                    // Clear date-related error
+                    if (error) setError("");
+                  }}
                   className={styles.input}
                   required
                 />
@@ -303,7 +332,19 @@ const PlanTrip = () => {
                 <input
                   type="date"
                   value={checkOut}
-                  onChange={(e) => setCheckOut(e.target.value)}
+                  min={addDays(checkIn || today, 1)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val <= checkIn) {
+                      // ignore invalid manual selection; auto-correct
+                      const corrected = addDays(checkIn, 1);
+                      setCheckOut(corrected);
+                      setError("Checkout adjusted to be after check-in.");
+                      return;
+                    }
+                    setCheckOut(val);
+                    if (error) setError("");
+                  }}
                   className={styles.input}
                   required
                 />
