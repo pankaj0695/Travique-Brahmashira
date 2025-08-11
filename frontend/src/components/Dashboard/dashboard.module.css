@@ -1,7 +1,7 @@
 .fullPageDashboard {
   min-height: 100vh;
   width: 100vw;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0ea5e9 100%);
+  background: linear-gradient(135deg, #a8dced 0%, #c6ecf1 60%, #e6eff4 100%);
   color: #e7edf3;
   font-family: 'Segoe UI', 'Comic Sans MS', cursive, sans-serif;
   padding: 0;
@@ -132,7 +132,8 @@
   font-size: 1.7rem;
   font-family: Georgia, 'Times New Roman', Times, serif;
   letter-spacing: 1px;
-  color: #e7edf3;
+  font-weight: bolder;
+  color: #010c17;
 
   z-index: 1;
   position: relative;
@@ -163,7 +164,7 @@
   margin-bottom: 32px;
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
-  box-shadow: 0 4px 24px #0ea5e933;
+  box-shadow: 0 4px 24px #010d1233;
 }
 
 .regionBlock img {
@@ -177,6 +178,7 @@
   margin: 12px 0 18px 0;
   font-size: 1.13rem;
   color: #78e4f0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   font-weight: 500;
 }
 
