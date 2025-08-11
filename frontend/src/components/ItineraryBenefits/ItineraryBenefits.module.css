@@ -1,0 +1,400 @@
+/* ItineraryBenefits.module.css */
+
+.itineraryBenefits {
+  width: 100%;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.heroSection {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* How It Works Section */
+.howItWorksSection {
+  padding: 80px 0;
+  background: white;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #1a202c;
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.stepCard {
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.stepCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+  border-color: #667eea;
+}
+
+.stepNumber {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid white;
+}
+
+.stepIcon {
+  font-size: 3rem;
+  margin: 20px 0;
+}
+
+.stepTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #2d3748;
+}
+
+.stepDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4a5568;
+}
+
+/* Benefits Section */
+.benefitsSection {
+  padding: 80px 0;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.sectionSubtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #4a5568;
+  margin-bottom: 60px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.benefitCard {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.benefitCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+  border-color: #667eea;
+}
+
+.benefitIcon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.benefitTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #2d3748;
+}
+
+.benefitDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4a5568;
+}
+
+/* Preview Section */
+.previewSection {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+}
+
+.itineraryPreview {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.dayCard {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e2e8f0;
+}
+
+.dayHeader {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.dayNumber {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.dayTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.dayContent {
+  padding: 30px;
+}
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.activityItem:last-child {
+  border-bottom: none;
+}
+
+.time {
+  font-weight: 600;
+  color: #667eea;
+  min-width: 80px;
+  font-size: 0.9rem;
+}
+
+.activity {
+  font-size: 1rem;
+  color: #2d3748;
+  flex: 1;
+}
+
+.dayBudget {
+  background: #f8fafc;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px solid #e2e8f0;
+}
+
+.budgetLabel {
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.budgetAmount {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #667eea;
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+}
+
+.ctaContent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.ctaSubtitle {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+.ctaButton {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+  background: #f7fafc;
+}
+
+.ctaIcon {
+  font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+  
+  .heroSubtitle {
+    font-size: 1.1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+  
+  .heroSection,
+  .howItWorksSection,
+  .benefitsSection,
+  .previewSection,
+  .ctaSection {
+    padding: 60px 0;
+  }
+  
+  .stepsGrid,
+  .benefitsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .stepCard,
+  .benefitCard {
+    padding: 25px 20px;
+  }
+  
+  .dayHeader {
+    padding: 15px 20px;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .dayContent {
+    padding: 20px;
+  }
+  
+  .activityItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .time {
+    min-width: auto;
+    font-size: 0.8rem;
+  }
+  
+  .dayBudget {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .ctaTitle {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.75rem;
+  }
+  
+  .ctaButton {
+    padding: 14px 24px;
+    font-size: 1rem;
+  }
+}

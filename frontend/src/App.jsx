@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
+import ItineraryBenefits from './components/ItineraryBenefits/ItineraryBenefits';
 import HowItWorks from './components/HowItWorks/HowItWorks';
 import WhyChoose from './components/WhyChoose/WhyChoose';
 import Footer from './components/Footer/Footer';
@@ -19,6 +19,7 @@ function Home() {
   return (
     <>
       <Hero />
+      <ItineraryBenefits />
       <HowItWorks />
       <WhyChoose />
       <Footer />
@@ -28,7 +29,7 @@ function Home() {
 
 function App() {
   return (
-    <ThemeProvider>
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -41,7 +42,7 @@ function App() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
-    </ThemeProvider>
+    </>
   );
 }
 

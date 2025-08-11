@@ -271,20 +271,3 @@
     font-size: 1rem;
   }
 }
-
-/* Dark mode specific adjustments */
-[data-theme="dark"] .particle {
-  background: var(--accent-primary);
-  box-shadow: 0 0 4px var(--accent-primary);
-}
-
-[data-theme="dark"] .airplane {
-  color: var(--accent-primary);
-  filter: drop-shadow(0 0 15px var(--accent-primary));
-}
-
-[data-theme="dark"] .canvas {
-  box-shadow: 
-    0 0 50px var(--accent-primary),
-    inset 0 0 50px rgba(56, 189, 248, 0.2);
-}
