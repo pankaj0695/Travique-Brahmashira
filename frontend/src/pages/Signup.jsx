@@ -19,6 +19,8 @@ const Signup = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
   const navigate = useNavigate();
   const { setUser } = useUser();
 
@@ -27,6 +29,36 @@ const Signup = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setImageUploading(true);
+    setError("");
+    setImagePreview(URL.createObjectURL(file));
+    const formDataCloud = new FormData();
+    formDataCloud.append("file", file);
+    formDataCloud.append("upload_preset", "Travique");
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dnfkcjujc/image/upload",
+        {
+          method: "POST",
+          body: formDataCloud,
+        }
+      );
+      const data = await res.json();
+      if (data.secure_url) {
+        setFormData((prev) => ({ ...prev, image: data.secure_url }));
+      } else {
+        setError("Image upload failed");
+      }
+    } catch (err) {
+      setError("Image upload error");
+    } finally {
+      setImageUploading(false);
+    }
   };
 
   const handleSignup = async (e) => {
@@ -42,7 +74,12 @@ const Signup = () => {
 
     try {
       const { confirmPassword, ...signupData } = formData;
-
+      // Ensure image field is present
+      if (!signupData.image) {
+        setError("Please upload a profile image");
+        setLoading(false);
+        return;
+      }
       const response = await fetch(`${backend_url}/api/auth/register`, {
         method: "POST",
         headers: {
@@ -82,7 +119,33 @@ const Signup = () => {
           {error && (
             <div style={{ color: "red", marginBottom: 8 }}>{error}</div>
           )}
-          <form className={styles.form} onSubmit={handleSignup}>
+          <form
+            className={styles.form}
+            onSubmit={handleSignup}
+            encType="multipart/form-data"
+          >
+            <label>Profile Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              disabled={imageUploading}
+            />
+            {imageUploading && (
+              <div style={{ color: "#007bff" }}>Uploading image...</div>
+            )}
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="Preview"
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: "50%",
+                  marginBottom: 8,
+                }}
+              />
+            )}
             <label>Full Name</label>
             <input
               type="text"
