@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../UserContext";
+import { useUser } from "../../UserContext";
 import {
   FaUserCircle,
   FaMapMarkerAlt,
@@ -17,10 +17,10 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
-import Footer from "../components/Footer/Footer";
-import TripSuggestionCard from "../components/TripSuggestionCard";
+import Footer from "../../components/Footer/Footer";
+import TripSuggestionCard from "../../components/TripSuggestionCard";
 import styles from "./Profile.module.css";
-import { backend_url } from "../utils/helper";
+import { backend_url } from "../../utils/helper";
 
 const Profile = () => {
   const { user, logout } = useUser();

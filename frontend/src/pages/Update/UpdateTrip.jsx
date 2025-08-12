@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useUser } from "../UserContext";
-import { backend_url } from "../utils/helper";
+import { useUser } from "../../UserContext";
+import { backend_url } from "../../utils/helper";
 import styles from "./UpdateTrip.module.css";
-import Footer from "../components/Footer/Footer";
+import Footer from "../../components/Footer/Footer";
 import { FaArrowLeft, FaSpinner, FaPaperPlane } from "react-icons/fa";
 
 const UpdateTrip = () => {

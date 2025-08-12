@@ -11,19 +11,19 @@ import {
   FaSuitcase,
   FaCheckCircle,
 } from "react-icons/fa";
-import Footer from "../components/Footer/Footer";
-import { useUser } from "../UserContext";
-import { generateTrip } from "../utils/tripPlannerAPI";
+import Footer from "../../components/Footer/Footer";
+import { useUser } from "../../UserContext";
+import { generateTrip } from "../../utils/tripPlannerAPI";
 import {
   fetchPredictHQEvents,
   getEventCategoryIcon,
   formatEventDate,
   getAttendanceLabel,
-} from "../utils/predicthqAPI";
+} from "../../utils/predicthqAPI";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { fetchMealImage as fetchMealImageFromAPI } from "../utils/mealImageAPI";
-import { backend_url } from "../utils/helper";
+import { fetchMealImage as fetchMealImageFromAPI } from "../../utils/mealImageAPI";
+import { backend_url } from "../../utils/helper";
 
 const TripSuggestions = () => {
   const { tripDetails, user } = useUser();

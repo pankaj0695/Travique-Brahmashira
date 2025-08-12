@@ -6,9 +6,9 @@ import {
   FaUserCircle,
   FaSpinner,
 } from "react-icons/fa";
-import { useUser } from "../UserContext";
+import { useUser } from "../../UserContext";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer/Footer";
+import Footer from "../../components/Footer/Footer";
 
 // Backend API base URL
 const API_BASE_URL =

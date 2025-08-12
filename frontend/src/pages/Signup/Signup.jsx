@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Signup.module.css";
-import Footer from "../components/Footer/Footer";
-import { useUser } from "../UserContext";
-import { backend_url } from "../utils/helper";
+import Footer from "../../components/Footer/Footer";
+import { useUser } from "../../UserContext";
+import { backend_url } from "../../utils/helper";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
