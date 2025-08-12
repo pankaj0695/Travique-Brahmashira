@@ -206,6 +206,23 @@
   font-size: 1.5rem;
 }
 
+/* Palette title variant */
+.paletteTitle {
+  margin: 0;
+  padding: 1.2rem 2rem;
+  background: linear-gradient(90deg, #011D4D, #034078, #1282A2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border-bottom: 1px solid rgba(1,29,77,0.12);
+  font-weight: 900;
+}
+
+/* Badges for boolean/status */
+.badge { display:inline-block; padding: 6px 10px; border-radius: 999px; font-weight: 800; font-size: .8rem; border:1px solid transparent; }
+.badgeOk { background: rgba(18,130,162,0.15); color:#034078; border-color: rgba(18,130,162,0.4); }
+.badgeMuted { background: rgba(99,55,44,0.10); color:#63372C; border-color: rgba(99,55,44,0.25); }
+
 .table {
   width: 100%;
   border-collapse: collapse;

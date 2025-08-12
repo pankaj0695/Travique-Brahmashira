@@ -8,14 +8,19 @@ const Dashboard = () => {
   const { admin, logoutAdmin } = useAdmin();
   const [users, setUsers] = useState([]);
   const [admins, setAdmins] = useState([]);
+  const [trips, setTrips] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("users");
+  const [listLoading, setListLoading] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
   useEffect(() => {
     fetchUsers();
     fetchAdmins();
+    fetchTrips();
+    fetchBlogs();
   }, []);
 
   const fetchUsers = async () => {
@@ -56,6 +61,32 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     logoutAdmin();
+  };
+
+  const fetchTrips = async () => {
+    try {
+      setListLoading(true);
+      const response = await fetch(`${backend_url}/api/trips/all?limit=50`);
+      const data = await response.json();
+      if (response.ok) setTrips(data.trips || []);
+    } catch (err) {
+      console.error("Error fetching trips:", err);
+    } finally {
+      setListLoading(false);
+    }
+  };
+
+  const fetchBlogs = async () => {
+    try {
+      setListLoading(true);
+      const response = await fetch(`${backend_url}/api/blogs`);
+      const data = await response.json();
+      if (response.ok) setBlogs(Array.isArray(data) ? data : data.blogs || []);
+    } catch (err) {
+      console.error("Error fetching blogs:", err);
+    } finally {
+      setListLoading(false);
+    }
   };
 
   // Filter admins based on current admin's role
@@ -106,6 +137,22 @@ const Dashboard = () => {
           >
             Admins ({getFilteredAdmins().length})
           </button>
+          <button
+            className={`${styles.tab} ${
+              activeTab === "trips" ? styles.active : ""
+            }`}
+            onClick={() => setActiveTab("trips")}
+          >
+            Trips ({trips.length})
+          </button>
+          <button
+            className={`${styles.tab} ${
+              activeTab === "blogs" ? styles.active : ""
+            }`}
+            onClick={() => setActiveTab("blogs")}
+          >
+            Blogs ({blogs.length})
+          </button>
         </div>
 
         {admin?.role === "superadmin" && (
@@ -124,7 +171,7 @@ const Dashboard = () => {
         <div className={styles.tableContainer}>
           {activeTab === "users" ? (
             <div>
-              <h2>Users</h2>
+              <h2 className={styles.paletteTitle}>Users</h2>
               {users.length === 0 ? (
                 <p>No users found.</p>
               ) : (
@@ -170,9 +217,9 @@ const Dashboard = () => {
                 </table>
               )}
             </div>
-          ) : (
+      ) : activeTab === "admins" ? (
             <div>
-              <h2>Admins</h2>
+        <h2 className={styles.paletteTitle}>Admins</h2>
               {getFilteredAdmins().length === 0 ? (
                 <p>No admins found.</p>
               ) : (
@@ -202,6 +249,76 @@ const Dashboard = () => {
                             ? new Date(adminUser.createdAt).toLocaleDateString()
                             : "N/A"}
                         </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          ) : activeTab === "trips" ? (
+            <div>
+              <h2 className={styles.paletteTitle}>Trips</h2>
+              {listLoading ? (
+                <p>Loading trips…</p>
+              ) : trips.length === 0 ? (
+                <p>No trips found.</p>
+              ) : (
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>City</th>
+                      <th>Dates</th>
+                      <th>Preference</th>
+                      <th>Budget</th>
+                      <th>Shared</th>
+                      <th>Created</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {trips.map((t) => (
+                      <tr key={t._id}>
+                        <td>{t.city || "—"}</td>
+                        <td>
+                          {(t.checkIn && new Date(t.checkIn).toLocaleDateString()) || "—"} — {(t.checkOut && new Date(t.checkOut).toLocaleDateString()) || "—"}
+                        </td>
+                        <td>{Array.isArray(t.preference) ? t.preference.join(", ") : t.preference || "—"}</td>
+                        <td>{typeof t.budget === 'number' ? `₹${t.budget.toLocaleString()}` : "—"}</td>
+                        <td>
+                          <span className={`${styles.badge} ${t.shared ? styles.badgeOk : styles.badgeMuted}`}>
+                            {t.shared ? "Yes" : "No"}
+                          </span>
+                        </td>
+                        <td>{t.createdAt ? new Date(t.createdAt).toLocaleString() : "—"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          ) : (
+            <div>
+              <h2 className={styles.paletteTitle}>Blogs</h2>
+              {listLoading ? (
+                <p>Loading blogs…</p>
+              ) : blogs.length === 0 ? (
+                <p>No blogs found.</p>
+              ) : (
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Author</th>
+                      <th>Created</th>
+                      <th>Id</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {blogs.map((b) => (
+                      <tr key={b._id}>
+                        <td>{b.title || "Untitled"}</td>
+                        <td>{b.author || "—"}</td>
+                        <td>{b.createdAt ? new Date(b.createdAt).toLocaleString() : "—"}</td>
+                        <td style={{ fontFamily: 'monospace', fontSize: '.85rem' }}>{b._id}</td>
                       </tr>
                     ))}
                   </tbody>
