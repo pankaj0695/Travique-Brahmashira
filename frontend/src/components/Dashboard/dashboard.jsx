@@ -542,7 +542,7 @@ const Dashboard = () => {
               onClick={() => setShowTripModal(false)}
               className={styles.closeButton}
             >
-              <FaTimes />
+              X
             </button>
 
             <h2 className={styles.modalTitle}>
@@ -582,7 +582,164 @@ const Dashboard = () => {
 
             <div>
               <h3 className={styles.suggestionsTitle}>Trip Suggestions</h3>
-              <TripSuggestionCard suggestions={selectedTrip.suggestions} />
+              {selectedTrip.suggestions && (
+                <div className={styles.suggestionsContent}>
+                  {/* Hotels Section */}
+                  {Array.isArray(selectedTrip.suggestions.hotels) && (
+                    <div className={styles.hotelSection}>
+                      <h4>Recommended Hotels</h4>
+                      <div className={styles.hotelGrid}>
+                        {selectedTrip.suggestions.hotels.map((hotel, idx) => (
+                          <div key={idx} className={styles.hotelCard}>
+                            <div className={styles.hotelName}>{hotel.name}</div>
+                            <div className={styles.hotelType}>{hotel.type}</div>
+                            <div className={styles.hotelLocation}>
+                              {hotel.location}
+                            </div>
+                            <div className={styles.hotelCost}>
+                              ₹{hotel.totalCost}
+                            </div>
+                            <a
+                              href={hotel.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.hotelLink}
+                            >
+                              Book/Info
+                            </a>
+                            <ul className={styles.hotelFeatures}>
+                              {hotel.features.map((f, i) => (
+                                <li key={i}>{f}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Meals Section */}
+                  {selectedTrip.suggestions.meals && (
+                    <div className={styles.mealSection}>
+                      <h4>Meal Recommendations</h4>
+                      <div className={styles.mealGrid}>
+                        {Object.entries(selectedTrip.suggestions.meals).map(
+                          ([mealType, mealInfo]) => (
+                            <div key={mealType} className={styles.mealCard}>
+                              <div className={styles.mealTitle}>
+                                {mealType.charAt(0).toUpperCase() +
+                                  mealType.slice(1)}
+                              </div>
+                              <div>Cuisine: {mealInfo.cuisineType}</div>
+                              <div>Famous Dish: {mealInfo.famousDish}</div>
+                              <div>Min Cost: ₹{mealInfo.minCost}</div>
+                              <div>Recommended Restaurants:</div>
+                              <ul className={styles.restaurantList}>
+                                {mealInfo.recommendedRestaurants.map((r, i) => (
+                                  <li key={i}>
+                                    <a
+                                      href={r.googleMapLocation}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className={styles.restaurantLink}
+                                    >
+                                      {r.name}
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Itinerary Section */}
+                  {Array.isArray(selectedTrip.suggestions.itinerary) && (
+                    <div className={styles.itinerarySection}>
+                      <h4>Itinerary</h4>
+                      {selectedTrip.suggestions.itinerary.map((day, idx) => (
+                        <div key={idx} className={styles.itineraryDay}>
+                          <div className={styles.itineraryDayTitle}>
+                            {day.day} ({day.date})
+                          </div>
+                          <ul className={styles.activityList}>
+                            {day.activities.map((activity, i) => (
+                              <li key={i} className={styles.activityItem}>
+                                <span className={styles.activityTime}>
+                                  {activity.time}:
+                                </span>{" "}
+                                {activity.description}
+                                {activity.minTransportCost > 0 && (
+                                  <span className={styles.activityTransport}>
+                                    {" "}
+                                    (Transport: ₹{activity.minTransportCost})
+                                  </span>
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Estimated Total Section */}
+                  {selectedTrip.suggestions.estimatedTotal && (
+                    <div className={styles.estimatedTotalSection}>
+                      <h4>Estimated Budget</h4>
+                      <table className={styles.estimatedTable}>
+                        <tbody>
+                          {Object.entries(
+                            selectedTrip.suggestions.estimatedTotal.breakdown ||
+                              {}
+                          ).map(([k, v]) => (
+                            <tr key={k}>
+                              <td className={styles.estimatedLabel}>
+                                {k
+                                  .replace(/([A-Z])/g, " $1")
+                                  .replace(/^./, (str) => str.toUpperCase())}
+                              </td>
+                              <td className={styles.estimatedValue}>₹{v}</td>
+                            </tr>
+                          ))}
+                          <tr>
+                            <td className={styles.estimatedLabel}>
+                              <b>Total</b>
+                            </td>
+                            <td className={styles.estimatedValue}>
+                              <b>
+                                ₹{selectedTrip.suggestions.estimatedTotal.total}
+                              </b>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {/* Packing List Section */}
+                  {Array.isArray(selectedTrip.suggestions.packingList) &&
+                    selectedTrip.suggestions.packingList.length > 0 && (
+                      <div className={styles.packingListSection}>
+                        <h4 className={styles.sectionTitle}>Packing List</h4>
+                        <ul className={styles.packingList}>
+                          {selectedTrip.suggestions.packingList.map(
+                            (item, idx) => (
+                              <li key={idx} className={styles.packingListItem}>
+                                <FaSuitcase
+                                  className={styles.packingListIcon}
+                                />{" "}
+                                {item}
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                </div>
+              )}
             </div>
 
             <div className={styles.modalActions}>
