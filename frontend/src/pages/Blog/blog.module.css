@@ -1,11 +1,14 @@
 /* Blog Component Styles */
 .bg {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #011d4d 0%, #034078 50%, #1282a2 100%);
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding-top: 30px;
+  justify-content: flex-start;
+  padding: 30px 20px;
   overflow-x: hidden;
   /* Modern background patterns */
   background-image: radial-gradient(
@@ -28,50 +31,19 @@
   animation: heroFloat 20s ease-in-out infinite;
 }
 
-/* These pseudo-elements create the blurred color blobs in the background.
-   The glass effect on the panels below will blur these shapes. */
-.bg::before,
-.bg::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  /* Increased blur on the background shapes for a softer look */
-  filter: blur(120px);
-  z-index: -1; /* Place it behind the content */
-  opacity: 0.9; /* Make them more prominent */
-}
-
-/* More vibrant blue/cyan blob */
-.bg::before {
-  width: 450px;
-  height: 450px;
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  top: -120px;
-  left: -180px;
-  animation: float 15s infinite ease-in-out;
-}
-
-/* More vibrant pink/red blob */
-.bg::after {
-  width: 400px;
-  height: 400px;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
-  bottom: -150px;
-  right: -120px;
-  animation: float 20s infinite ease-in-out reverse;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px) translateX(0px);
+@keyframes heroFloat {
+  0%,
+  100% {
+    background-position: 0% 0%, 100% 100%, center center;
+    transform: translateY(0px);
   }
   50% {
-    transform: translateY(-20px) translateX(20px);
-  }
-  100% {
-    transform: translateY(0px) translateX(0px);
+    background-position: 10% 10%, 90% 90%, center center;
+    transform: translateY(-5px);
   }
 }
+
+/* Removed floating blob animations for cleaner UI */
 
 .navbar {
   width: 100%;
@@ -128,20 +100,35 @@
 }
 
 .container {
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.15); /* Glass morphism effect */
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  box-shadow: 0 25px 50px rgba(56, 189, 248, 0.15),
+    0 10px 25px rgba(14, 165, 233, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  padding: 2.5rem;
+  max-width: 1200px;
   width: 100%;
-  padding: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(45px);
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
 
-  /* Add these to ensure full-width behavior */
-  box-sizing: border-box; /* Include padding in width calculation */
-  margin: 0 auto; /* Center if parent is wider than content */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #22d3ee, #38bdf8, #0ea5e9);
+  border-radius: 25px 25px 0 0;
+  opacity: 1;
 }
 
 .header {
@@ -150,31 +137,36 @@
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 2.1rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #011d4d 0%, #011d4d 50%, #011d4d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .subtitle {
-  font-size: 1.2rem;
-  color: #555;
+  font-size: 1.1rem;
+  color: #63372c; /* Brown */
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
   opacity: 0.9;
 }
 
 .blogGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
   width: 100%;
+  max-width: 1200px;
 }
 
 .blogCard {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   padding: 1.5rem;
   transition: all 0.3s ease;
@@ -182,14 +174,29 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 25px 50px rgba(56, 189, 248, 0.1),
+    0 10px 25px rgba(14, 165, 233, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   min-height: 200px;
 }
 
+.blogCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #22d3ee, #38bdf8, #0ea5e9);
+  border-radius: 20px 20px 0 0;
+  opacity: 1;
+}
+
 .blogCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-  border-color: rgba(255, 255, 255, 1);
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(56, 189, 248, 0.15),
+    0 15px 30px rgba(14, 165, 233, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .blogCard::before {
@@ -205,27 +212,27 @@
 .blogTitle {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #333;
+  color: #011d4d; /* Dark Navy Blue */
   margin-bottom: 0.5rem;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .blogTitle:hover {
-  color: #007bff;
+  color: #011d4d; /* Teal Blue */
 }
 
 .blogExcerpt {
-  color: #555;
+  color: #034078; /* Deep Blue */
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 1rem;
   flex-grow: 1;
-  .blog-excerpt {
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* show 3 lines max */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .actionButtons {
@@ -236,60 +243,67 @@
 
 .editBtn,
 .deleteBtn {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.5);
-  color: #555;
+  border: 1px solid rgba(18, 130, 162, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  color: #011d4d;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
   flex: 1;
+  font-weight: 500;
 }
 
 .editBtn:hover {
-  background: rgba(255, 255, 255, 1);
-  border-color: #007bff;
-  color: #007bff;
+  background: rgba(18, 130, 162, 0.1);
+  border-color: #1282a2;
+  color: #1282a2;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(18, 130, 162, 0.1);
 }
 
 .deleteBtn {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
   color: #ef4444;
 }
 
 .deleteBtn:hover {
-  background: rgba(239, 68, 68, 1);
-  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.5);
   color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
 }
 
 .addBlogBtn {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 0.8rem 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  color: #011d4d; /* Dark Navy Blue */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  padding: 1rem 1.5rem;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 25px 50px rgba(56, 189, 248, 0.15),
+    0 10px 25px rgba(14, 165, 233, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   z-index: 999;
   transition: all 0.3s ease;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
 }
 
 .addBlogBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 30px 60px rgba(56, 189, 248, 0.2),
+    0 15px 30px rgba(14, 165, 233, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  color: #1282a2; /* Teal Blue */
 }
 
 /* MODAL STYLES - CORRECTED LIGHT THEME */
@@ -299,7 +313,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
@@ -309,25 +323,44 @@
 }
 
 .editorModal {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15); /* Glass morphism effect */
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  box-shadow: 0 25px 50px rgba(56, 189, 248, 0.15),
+    0 10px 25px rgba(14, 165, 233, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   padding: 2.5rem;
   width: 100%;
   max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
-  color: #333;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  color: #011d4d; /* Dark Navy Blue */
+  position: relative;
+  overflow: hidden;
+}
+
+.editorModal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #22d3ee, #38bdf8, #0ea5e9);
+  border-radius: 25px 25px 0 0;
+  opacity: 1;
 }
 
 .editorModal h2 {
   text-align: center;
   font-size: 1.8rem;
   margin-bottom: 2rem;
-  color: #0056b3;
-  font-weight: 600;
+  background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 50%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
+  font-weight: 700;
 }
 
 .inputGroup {
@@ -338,38 +371,38 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #444;
+  color: #034078; /* Deep Blue */
 }
 
 .input {
   width: 100%;
   padding: 0.8rem 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border: 1px solid rgba(18, 130, 162, 0.3); /* Teal border */
+  border-radius: 15px;
   font-size: 1rem;
-  background: rgba(255, 255, 255, 0.5);
-  color: #333;
-  transition: border-color 0.3s ease;
+  background: rgba(255, 255, 255, 0.9); /* White background */
+  color: #011d4d; /* Dark Navy Blue */
+  transition: all 0.3s ease;
 }
 
 .input:focus {
-  border-color: navy;
+  border-color: #1282a2; /* Teal Blue focus */
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(18, 130, 162, 0.1);
 }
 
 .richEditor .ql-toolbar {
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
-  border-radius: 10px 10px 0 0;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(18, 130, 162, 0.3) !important;
+  border-radius: 15px 15px 0 0;
 }
 
 .richEditor .ql-container {
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(18, 130, 162, 0.3) !important;
   border-top: 0 !important;
-  border-radius: 0 0 10px 10px;
-  color: #333;
+  border-radius: 0 0 15px 15px;
+  color: #011d4d;
 }
 
 .richEditor .ql-editor {
@@ -378,8 +411,8 @@
 
 .ql-snow .ql-stroke,
 .ql-snow .ql-picker-label {
-  stroke: #555;
-  color: #555;
+  stroke: #034078;
+  color: #034078;
 }
 
 .editorActions {
@@ -401,30 +434,355 @@
 
 .cancelBtn {
   background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  color: #555;
+  border: 1px solid rgba(18, 130, 162, 0.3);
+  color: #034078;
 }
 
 .cancelBtn:hover {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: rgba(0, 0, 0, 0.4);
+  background: rgba(18, 130, 162, 0.05);
+  border-color: #1282a2;
 }
 
 .saveBtn {
-  background: linear-gradient(135deg, #00c6ff, #007bff);
+  background: linear-gradient(135deg, #22d3ee, #38bdf8, #0ea5e9);
   border: none;
   color: #fff;
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(34, 211, 238, 0.3);
 }
 
 .saveBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(34, 211, 238, 0.4);
 }
 
-/* Media Query for responsive columns */
+/* Blog Content Popup Styles - Light Theme with Blur */
+.blogPopupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.blogPopupModal {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  max-width: 800px;
+  max-height: 90vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.blogPopupModal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #22d3ee, #38bdf8, #0ea5e9);
+  border-radius: 20px 20px 0 0;
+  opacity: 1;
+}
+
+.blogPopupHeader {
+  padding: 2rem 2rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.blogPopupTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #1f2937;
+  line-height: 1.2;
+  flex: 1;
+}
+
+.blogPopupCloseBtn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #374151;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blogPopupCloseBtn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.blogPopupImageContainer {
+  padding: 0 2rem;
+  margin-bottom: 1rem;
+}
+
+.blogPopupImage {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.blogPopupContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 2rem 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.blogPopupText {
+  color: #374151;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.blogPopupText h1,
+.blogPopupText h2,
+.blogPopupText h3 {
+  color: #1f2937;
+  margin: 2rem 0 1rem;
+}
+
+.blogPopupText h1 {
+  font-size: 1.8rem;
+}
+
+.blogPopupText h2 {
+  font-size: 1.5rem;
+}
+
+.blogPopupText h3 {
+  font-size: 1.3rem;
+}
+
+.blogPopupText p {
+  margin: 1rem 0;
+}
+
+.blogPopupText ul,
+.blogPopupText ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.blogPopupText blockquote {
+  border-left: 4px solid #38bdf8;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  background: rgba(56, 189, 248, 0.1);
+  padding: 1rem;
+  border-radius: 0 10px 10px 0;
+}
+
+.blogPopupText code {
+  background: rgba(243, 244, 246, 0.8);
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  font-family: "Monaco", "Menlo", monospace;
+  font-size: 0.9rem;
+  color: #1f2937;
+}
+
+.blogPopupFooter {
+  padding: 1rem 2rem 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.blogPopupDate {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.blogPopupActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.blogPopupEditBtn,
+.blogPopupDeleteBtn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.blogPopupEditBtn {
+  background: rgba(34, 211, 238, 0.15);
+  color: #0891b2;
+  border: 1px solid rgba(34, 211, 238, 0.3);
+}
+
+.blogPopupEditBtn:hover {
+  background: rgba(34, 211, 238, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(34, 211, 238, 0.3);
+}
+
+.blogPopupDeleteBtn {
+  background: rgba(239, 68, 68, 0.15);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.blogPopupDeleteBtn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+/* Media Query for responsive design */
 @media (max-width: 768px) {
+  .bg {
+    padding: 20px 10px;
+  }
+
+  .container {
+    padding: 1.5rem;
+    border-radius: 15px;
+  }
+
   .blogGrid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .addBlogBtn {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .editorModal {
+    padding: 1.5rem;
+    margin: 1rem;
+    max-width: calc(100% - 2rem);
+  }
+
+  /* Blog Popup Responsive Styles */
+  .blogPopupOverlay {
+    padding: 1rem;
+  }
+
+  .blogPopupModal {
+    max-width: calc(100% - 2rem);
+    max-height: calc(100vh - 2rem);
+    border-radius: 15px;
+  }
+
+  .blogPopupHeader {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+
+  .blogPopupTitle {
+    font-size: 1.5rem;
+  }
+
+  .blogPopupCloseBtn {
+    width: 35px;
+    height: 35px;
+    font-size: 1.3rem;
+  }
+
+  .blogPopupImageContainer {
+    padding: 0 1.5rem;
+  }
+
+  .blogPopupImage {
+    height: 200px;
+  }
+
+  .blogPopupContent {
+    padding: 0 1.5rem 1rem;
+  }
+
+  .blogPopupText {
+    font-size: 1rem;
+  }
+
+  .blogPopupFooter {
+    padding: 1rem 1.5rem 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .blogPopupActions {
+    width: 100%;
+    justify-content: flex-end;
   }
 }

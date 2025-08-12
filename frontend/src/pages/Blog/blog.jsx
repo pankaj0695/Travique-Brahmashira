@@ -127,6 +127,10 @@ const Blog = () => {
     setActiveBlog(blog);
   };
 
+  const handleCloseBlogPopup = () => {
+    setActiveBlog(null);
+  };
+
   const handleEdit = (blog) => {
     setEditingBlog(blog);
     setBlogTitle(blog.title);
@@ -268,6 +272,78 @@ const Blog = () => {
                     ? "Update"
                     : "Save"}
                 </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Blog Content Popup */}
+        {activeBlog && (
+          <div
+            className={styles.blogPopupOverlay}
+            onClick={handleCloseBlogPopup}
+          >
+            <div
+              className={styles.blogPopupModal}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className={styles.blogPopupHeader}>
+                <h1 className={styles.blogPopupTitle}>{activeBlog.title}</h1>
+                <button
+                  className={styles.blogPopupCloseBtn}
+                  onClick={handleCloseBlogPopup}
+                  aria-label="Close popup"
+                >
+                  ×
+                </button>
+              </div>
+
+              {activeBlog.image && (
+                <div className={styles.blogPopupImageContainer}>
+                  <img
+                    src={activeBlog.image}
+                    alt={activeBlog.title}
+                    className={styles.blogPopupImage}
+                  />
+                </div>
+              )}
+
+              <div className={styles.blogPopupContent}>
+                <div
+                  className={styles.blogPopupText}
+                  dangerouslySetInnerHTML={{ __html: activeBlog.content }}
+                />
+              </div>
+
+              <div className={styles.blogPopupFooter}>
+                <p className={styles.blogPopupDate}>
+                  Published:{" "}
+                  {new Date(activeBlog.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+                <div className={styles.blogPopupActions}>
+                  <button
+                    className={styles.blogPopupEditBtn}
+                    onClick={() => {
+                      handleCloseBlogPopup();
+                      handleEdit(activeBlog);
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className={styles.blogPopupDeleteBtn}
+                    onClick={() => {
+                      handleCloseBlogPopup();
+                      handleDelete(activeBlog._id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           </div>

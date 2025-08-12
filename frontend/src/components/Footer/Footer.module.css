@@ -1,21 +1,16 @@
 .footer {
-  background: linear-gradient(
-    135deg,
-    #011d4d 50%,
-    #034078 50%
-  ); /* Dark Navy to Deep Blue gradient */
+  background: #e4dfda; /* Solid Dark Navy background */
   background-image: none !important;
   background-repeat: no-repeat;
   background-size: auto;
   color: #8b372c; /* Maroon text */
-  padding: 3rem 2rem 1.5rem 2rem;
+  padding: 1rem 2rem; /* Decreased height */
   font-size: 1rem;
   border-top: 3px solid #1282a2; /* Teal Blue border */
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  position: fixed;
-  bottom: 0;
+  position: static; /* No longer overlays page content */
   width: 100%;
 }
 
