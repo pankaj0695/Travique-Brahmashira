@@ -357,9 +357,8 @@ const TripSuggestions = () => {
               <div className={styles.cardHeader}>
                 <h2 className={styles.cardTitle}>
                   <span className={styles.titleIcon}>🤖</span>
-                  AI Trip Plan
+                  Trip Plan
                 </h2>
-                <div className={styles.aiProvider}>Powered by Gemini</div>
               </div>
 
               {loadingDeepSeek ? (
@@ -621,7 +620,7 @@ const TripSuggestions = () => {
                           ).map(([k, v]) => (
                             <tr key={k}>
                               <td>{k.charAt(0).toUpperCase() + k.slice(1)}</td>
-                              <td>₹{v}</td>
+                              <td>{v}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -632,7 +631,7 @@ const TripSuggestions = () => {
                             </td>
                             <td>
                               <strong>
-                                ₹{deepSeekResult.estimatedTotal.total}
+                                {deepSeekResult.estimatedTotal.total}
                               </strong>
                             </td>
                           </tr>
