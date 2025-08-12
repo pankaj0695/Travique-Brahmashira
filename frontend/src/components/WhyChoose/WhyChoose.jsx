@@ -5,7 +5,7 @@ import { FaRobot, FaRegClock, FaWallet } from 'react-icons/fa';
 const WhyChoose = () => {
   return (
     <section className={styles.whyChoose}>
-      <h2 className={styles.title}>Why Choose TravelBuddy?</h2>
+      <h2 className={styles.title}>Why Choose Travique ?</h2>
       <div className={styles.cards}>
         <div className={styles.card}>
           <div className={styles.icon}><FaRobot /></div>
