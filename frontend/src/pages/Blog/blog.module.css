@@ -1,0 +1,430 @@
+/* Blog Component Styles */
+.bg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 30px;
+  overflow-x: hidden;
+  /* Modern background patterns */
+  background-image: radial-gradient(
+      ellipse at 20% 80%,
+      rgba(18, 130, 162, 0.2) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(3, 64, 120, 0.15) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(228, 223, 218, 0.05) 0%,
+      transparent 40%
+    );
+  background-size: 1200px 800px, 800px 600px, 400px 400px;
+  background-position: 0% 0%, 100% 100%, center center;
+  animation: heroFloat 20s ease-in-out infinite;
+}
+
+/* These pseudo-elements create the blurred color blobs in the background.
+   The glass effect on the panels below will blur these shapes. */
+.bg::before,
+.bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  /* Increased blur on the background shapes for a softer look */
+  filter: blur(120px);
+  z-index: -1; /* Place it behind the content */
+  opacity: 0.9; /* Make them more prominent */
+}
+
+/* More vibrant blue/cyan blob */
+.bg::before {
+  width: 450px;
+  height: 450px;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  top: -120px;
+  left: -180px;
+  animation: float 15s infinite ease-in-out;
+}
+
+/* More vibrant pink/red blob */
+.bg::after {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  bottom: -150px;
+  right: -120px;
+  animation: float 20s infinite ease-in-out reverse;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-20px) translateX(20px);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+}
+
+.navbar {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  background: transparent;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2.2rem;
+  list-style: none;
+}
+
+.navLinks li a {
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navLinks li a:hover {
+  color: #007bff;
+}
+
+.userCorner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.profileImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.username {
+  font-weight: 500;
+  color: #333;
+}
+
+.container {
+  width: 100%;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(45px);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+
+  /* Add these to ensure full-width behavior */
+  box-sizing: border-box; /* Include padding in width calculation */
+  margin: 0 auto; /* Center if parent is wider than content */
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  opacity: 0.9;
+}
+
+.blogGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+}
+
+.blogCard {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  min-height: 200px;
+}
+
+.blogCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  border-color: rgba(255, 255, 255, 1);
+}
+
+.blogCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+}
+
+.blogTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.blogTitle:hover {
+  color: #007bff;
+}
+
+.blogExcerpt {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  .blog-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* show 3 lines max */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.editBtn,
+.deleteBtn {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.5);
+  color: #555;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.editBtn:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.deleteBtn {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.deleteBtn:hover {
+  background: rgba(239, 68, 68, 1);
+  border-color: #ef4444;
+  color: #fff;
+}
+
+.addBlogBtn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 999;
+  transition: all 0.3s ease;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.addBlogBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+/* MODAL STYLES - CORRECTED LIGHT THEME */
+.editorOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.editorModal {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: #333;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.editorModal h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #0056b3;
+  font-weight: 600;
+}
+
+.inputGroup {
+  margin-bottom: 1.5rem;
+}
+
+.editorLabel {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  border-color: navy;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.richEditor .ql-toolbar {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 10px 10px 0 0;
+}
+
+.richEditor .ql-container {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-top: 0 !important;
+  border-radius: 0 0 10px 10px;
+  color: #333;
+}
+
+.richEditor .ql-editor {
+  min-height: 200px;
+}
+
+.ql-snow .ql-stroke,
+.ql-snow .ql-picker-label {
+  stroke: #555;
+  color: #555;
+}
+
+.editorActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cancelBtn,
+.saveBtn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.cancelBtn {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: #555;
+}
+
+.cancelBtn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.4);
+}
+
+.saveBtn {
+  background: linear-gradient(135deg, #00c6ff, #007bff);
+  border: none;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+}
+
+.saveBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+/* Media Query for responsive columns */
+@media (max-width: 768px) {
+  .blogGrid {
+    grid-template-columns: 1fr;
+  }
+}

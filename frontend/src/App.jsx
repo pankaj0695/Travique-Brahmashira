@@ -13,7 +13,7 @@ import TripSuggestions from "./pages/TripSuggestions/TripSuggestions";
 import UpdateTrip from "./pages/Update/UpdateTrip";
 import AboutUs from "./pages/AboutUS/AboutUs";
 import Dashboard from "./components/Dashboard/dashboard";
-import Blog from "./pages/blog";
+import Blog from "./pages/Blog/blog";
 
 function Home() {
   return (

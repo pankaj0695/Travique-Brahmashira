@@ -7,13 +7,16 @@
   background-image: none !important;
   background-repeat: no-repeat;
   background-size: auto;
-  color: #8B372C; /* Maroon text */
+  color: #8b372c; /* Maroon text */
   padding: 3rem 2rem 1.5rem 2rem;
   font-size: 1rem;
   border-top: 3px solid #1282a2; /* Teal Blue border */
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 .footer::before {
