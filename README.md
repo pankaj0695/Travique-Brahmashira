@@ -4,7 +4,7 @@
 
 [![Watch the demo video](thumbnail.png)](https://drive.google.com/file/d/171V4FzA1v5djnuJkgBQvdabdNcU64KnW/view?usp=sharing)
 
-> Click the image above to watch the demonstration video on Google Drive.
+> [**Watch the demonstration video directly on Google Drive**](https://drive.google.com/file/d/171V4FzA1v5djnuJkgBQvdabdNcU64KnW/view?usp=sharing)
 
 ### Team Brahmashira – Innovating travel planning with cutting-edge technology and intelligent automation.
 
