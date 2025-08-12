@@ -15,6 +15,7 @@ import {
   FaCalendarPlus,
   FaChevronLeft,
   FaChevronRight,
+  FaGlobeAmericas,
 } from "react-icons/fa";
 import TripSuggestionCard from "../TripSuggestionCard";
 import { backend_url } from "../../utils/helper";
@@ -39,6 +40,10 @@ const Dashboard = () => {
   const [pastTrips, setPastTrips] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  // Community shared trips state
+  const [sharedTrips, setSharedTrips] = useState([]);
+  const [sharedLoading, setSharedLoading] = useState(false);
+  const [sharedError, setSharedError] = useState(null);
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showTripModal, setShowTripModal] = useState(false);
   const [calendarEvents, setCalendarEvents] = useState([]);
@@ -59,6 +64,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (user?._id) {
       fetchPastTrips();
+  fetchSharedTrips();
     }
   }, [user]);
 
@@ -91,6 +97,30 @@ const Dashboard = () => {
       setError("Error connecting to server");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Fetch shared trips from other users
+  const fetchSharedTrips = async () => {
+    setSharedLoading(true);
+    setSharedError(null);
+    try {
+      // Fetch up to 100 shared trips, newest first
+      const url = `${backend_url}/api/trips/all?sharedOnly=true&limit=100&page=1`;
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        const allShared = data.trips || [];
+        // Exclude current user's own trips
+        const others = allShared.filter((t) => String(t.userId) !== String(user._id));
+        setSharedTrips(others);
+      } else {
+        setSharedError("Failed to fetch shared trips");
+      }
+    } catch (err) {
+      setSharedError("Error connecting to server");
+    } finally {
+      setSharedLoading(false);
     }
   };
 
@@ -297,6 +327,73 @@ const Dashboard = () => {
             />
           ))}
         </div>
+      </div>
+
+      {/* Community Shared Trips Section */}
+      <div className={styles.tripsSection}>
+        <h2 className={styles.sectionTitle}>
+          <FaGlobeAmericas />
+          Community Shared Trips
+        </h2>
+
+        {sharedLoading ? (
+          <div className={styles.loadingState}>
+            <p>Loading shared trips...</p>
+          </div>
+        ) : sharedError ? (
+          <div className={styles.errorState}>
+            <p>{sharedError}</p>
+          </div>
+        ) : sharedTrips.length === 0 ? (
+          <div className={styles.emptyState}>
+            <FaSuitcase className={styles.emptyStateIcon} />
+            <p>No community trips yet. Be the first to share!</p>
+          </div>
+        ) : (
+          <div className={styles.tripsGrid}>
+            {sharedTrips.map((trip) => (
+              <div
+                key={trip._id}
+                className={styles.tripCard}
+                onClick={() => viewTripDetails(trip)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className={styles.tripCardHeader}>
+                  <h4 className={styles.tripTitle}>
+                    <FaMapMarkerAlt />
+                    {trip.city}
+                  </h4>
+                </div>
+
+                <div className={styles.tripInfo}>
+                  <div className={styles.tripInfoItem}>
+                    <FaCalendarAlt />
+                    {formatDate(trip.checkIn)} - {formatDate(trip.checkOut)}
+                  </div>
+                  <div className={styles.tripInfoItem}>
+                    <strong>Preference:</strong> {Array.isArray(trip.preference) ? trip.preference.join(", ") : trip.preference}
+                  </div>
+                  <div className={styles.tripInfoItem}>
+                    <FaRupeeSign />
+                    <strong>Budget:</strong> {trip.budget ? Number(trip.budget).toLocaleString() : "N/A"}
+                  </div>
+                </div>
+
+                <div className={styles.tripDate}>Shared: {formatDate(trip.createdAt)}</div>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    viewTripDetails(trip);
+                  }}
+                  className={styles.viewDetailsButton}
+                >
+                  <FaEye /> View Details
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Past Trips Section */}
@@ -743,19 +840,23 @@ const Dashboard = () => {
             </div>
 
             <div className={styles.modalActions}>
-              <button
-                onClick={() => updateTrip(selectedTrip._id)}
-                className={styles.updateButton}
-              >
-                <FaEdit /> Update
-              </button>
-              <button
-                onClick={() => shareTrip(selectedTrip._id)}
-                className={styles.shareButton}
-                disabled={selectedTrip.shared}
-              >
-                <FaShare /> {selectedTrip.shared ? "Shared" : "Share"}
-              </button>
+              {String(selectedTrip.userId) === String(user._id) && (
+                <>
+                  <button
+                    onClick={() => updateTrip(selectedTrip._id)}
+                    className={styles.updateButton}
+                  >
+                    <FaEdit /> Update
+                  </button>
+                  <button
+                    onClick={() => shareTrip(selectedTrip._id)}
+                    className={styles.shareButton}
+                    disabled={selectedTrip.shared}
+                  >
+                    <FaShare /> {selectedTrip.shared ? "Shared" : "Share"}
+                  </button>
+                </>
+              )}
               <button
                 onClick={() => addToCalendar(selectedTrip)}
                 className={styles.calendarButton}
