@@ -793,6 +793,227 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* Suggestions Content */
+.suggestionsContent {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Hotels Section */
+.hotelSection {
+  margin-bottom: 24px;
+}
+
+.hotelGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.hotelCard {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.hotelCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.2);
+}
+
+.hotelName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #312e81;
+  margin-bottom: 8px;
+}
+
+.hotelType {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.hotelLocation {
+  font-size: 0.85rem;
+  color: #4b5563;
+  margin-bottom: 8px;
+}
+
+.hotelCost {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #0ea5e9;
+  margin-bottom: 8px;
+}
+
+.hotelLink {
+  font-size: 0.85rem;
+  color: #0284c7;
+  text-decoration: underline;
+  margin-bottom: 8px;
+}
+
+.hotelFeatures {
+  list-style: disc;
+  padding-left: 16px;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+/* Meals Section */
+.mealSection {
+  margin-bottom: 24px;
+}
+
+.mealGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.mealCard {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.mealCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.2);
+}
+
+.mealTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #312e81;
+  margin-bottom: 8px;
+}
+
+.restaurantList {
+  list-style: disc;
+  padding-left: 16px;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.restaurantLink {
+  font-size: 0.85rem;
+  color: #0284c7;
+  text-decoration: underline;
+}
+
+/* Itinerary Section */
+.itinerarySection {
+  margin-bottom: 24px;
+}
+
+.itineraryDay {
+  margin-bottom: 16px;
+}
+
+.itineraryDayTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #312e81;
+  margin-bottom: 8px;
+}
+
+.activityList {
+  list-style: disc;
+  padding-left: 16px;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.activityItem {
+  margin-bottom: 8px;
+}
+
+.activityTime {
+  font-weight: 600;
+  color: #0ea5e9;
+}
+
+.activityTransport {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* Estimated Total Section */
+.estimatedTotalSection {
+  margin-bottom: 24px;
+}
+
+.estimatedTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.estimatedTable td {
+  padding: 8px;
+  border: 1px solid rgba(14, 165, 233, 0.1);
+}
+
+.estimatedLabel {
+  font-weight: 600;
+  color: #312e81;
+}
+
+.estimatedValue {
+  font-weight: 500;
+  color: #0ea5e9;
+}
+
+/* Packing List Section */
+.packingListSection {
+  margin-top: 24px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.1);
+}
+
+.packingList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.packingListItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: #4b5563;
+  padding: 8px;
+  background: rgba(14, 165, 233, 0.05);
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.packingListItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2);
+}
+
+.packingListIcon {
+  color: #0ea5e9;
+  font-size: 1.2rem;
+}
+
 @media (max-width: 1300px) {
   .tile {
     min-width: 320px;
