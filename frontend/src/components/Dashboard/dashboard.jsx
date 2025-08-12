@@ -46,6 +46,8 @@ const Dashboard = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarView, setCalendarView] = useState("month"); // month, week, day
 
+  // Latest trips UI removed per request (backend-only)
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % carouselImages.length);
@@ -59,6 +61,8 @@ const Dashboard = () => {
       fetchPastTrips();
     }
   }, [user]);
+
+  // Removed latest trips fetch
 
   // Load calendar events from localStorage on component mount
   useEffect(() => {
@@ -274,6 +278,8 @@ const Dashboard = () => {
       <p className={styles.welcomeSubtitle}>
         Here's an overview of your travel journey and upcoming trips.
       </p>
+
+  {/* Latest trips section removed */}
 
       {/* Carousel */}
       <div className={styles.bannerSection}>

@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const PastTrip = require("../models/PastTrip");
+const { getLatestTrips, getAllTrips } = require("../controllers/tripController");
 
 const tripRouter = express.Router();
 
@@ -373,5 +374,10 @@ tripRouter.put("/shareTrip/:tripId", async (req, res) => {
     res.status(500).json({ error: "Failed to share trip" });
   }
 });
+
+// Public endpoint to fetch latest trips (default 5). Use ?sharedOnly=false to get all.
+tripRouter.get("/latest", getLatestTrips);
+// Admin/backoffice endpoint to list all trips (paginated)
+tripRouter.get("/all", getAllTrips);
 
 module.exports = tripRouter;

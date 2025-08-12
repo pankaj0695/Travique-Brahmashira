@@ -30,6 +30,8 @@
   width: 100%;
 }
 
+/* Latest trips section removed per request */
+
 .bannerSection {
   position: relative;
   width: 100%;
@@ -113,6 +115,7 @@
   margin-bottom: 32px;
   background: linear-gradient(90deg, #0d0866 30%, #06b6d4 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: 1px;
   width: 100%;
