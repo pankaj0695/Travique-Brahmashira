@@ -4,7 +4,20 @@ import { useUser } from "../../UserContext";
 import { backend_url } from "../../utils/helper";
 import styles from "./UpdateTrip.module.css";
 import Footer from "../../components/Footer/Footer";
-import { FaArrowLeft, FaSpinner, FaPaperPlane } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaSpinner,
+  FaPaperPlane,
+  FaCalendarAlt,
+  FaWallet,
+  FaMapMarkerAlt,
+  FaHotel,
+  FaUtensils,
+  FaLandmark,
+  FaTicketAlt,
+  FaInfoCircle,
+  FaStar,
+} from "react-icons/fa";
 
 const UpdateTrip = () => {
   const { tripId } = useParams();
@@ -112,6 +125,179 @@ const UpdateTrip = () => {
     );
   }
 
+  // Normalize suggestions into sections the UI can render as cards
+  const parseSuggestions = (raw) => {
+    if (!raw) return null;
+    try {
+      return typeof raw === "string" ? JSON.parse(raw) : raw;
+    } catch {
+      return raw;
+    }
+  };
+
+  const pick = (obj, keys) => {
+    for (const k of keys) {
+      const v = obj?.[k];
+      if (v !== undefined && v !== null && v !== "") return v;
+    }
+    return undefined;
+  };
+
+  const asArray = (val) => {
+    if (!val) return [];
+    return Array.isArray(val) ? val : typeof val === "object" ? Object.values(val) : [val];
+  };
+
+  const toSections = (suggestions) => {
+    if (!suggestions) return [];
+    const titleMap = {
+      hotels: "Hotels",
+      accommodations: "Hotels",
+      stays: "Hotels",
+      restaurants: "Restaurants",
+      food: "Restaurants",
+      eateries: "Restaurants",
+      events: "Local Events",
+      activities: "Activities",
+      sightseeing: "Sightseeing",
+      attractions: "Attractions",
+      itinerary: "Itinerary",
+      pointsOfInterest: "Points of Interest",
+    };
+
+    // If it's a plain array, treat as Highlights
+    if (Array.isArray(suggestions)) {
+      return [
+        { key: "highlights", title: "Highlights", items: suggestions },
+      ];
+    }
+
+    const sections = [];
+    for (const [key, value] of Object.entries(suggestions)) {
+      if (value === undefined || value === null) continue;
+      const title = titleMap[key] || key.replace(/[_-]/g, " ");
+      sections.push({ key, title, items: value });
+    }
+    return sections;
+  };
+
+  const renderIconForSection = (key) => {
+    const k = key.toLowerCase();
+    if (/(hotel|accom|stay)/.test(k)) return <FaHotel />;
+    if (/(restaurant|food|eat|dine)/.test(k)) return <FaUtensils />;
+    if (/(event|ticket)/.test(k)) return <FaTicketAlt />;
+    if (/(sight|attraction|poi|landmark)/.test(k)) return <FaLandmark />;
+    if (/(itinerary|day)/.test(k)) return <FaCalendarAlt />;
+    return <FaInfoCircle />;
+  };
+
+  const defaultTitleForSection = (sectionKey) => {
+    const k = (sectionKey || "").toLowerCase();
+    if (/(hotel|accom|stay)/.test(k)) return "Hotel";
+    if (/(restaurant|food|eat|dine)/.test(k)) return "Restaurant";
+    if (/(event|ticket)/.test(k)) return "Event";
+    if (/(sight|attraction|poi|landmark)/.test(k)) return "Attraction";
+    if (/(activity|activities)/.test(k)) return "Activity";
+    if (/(highlight)/.test(k)) return "Highlight";
+    return "Place";
+  };
+
+  const renderCard = (item, idx, sectionKey) => {
+    if (item == null) return null;
+    // If primitive, render as a chip-like card
+    if (typeof item !== "object") {
+      return (
+        <div key={idx} className={styles.card + " " + styles.cardCompact}>
+          <div className={styles.cardBody}>
+            <div className={styles.cardTitle}>{String(item)}</div>
+          </div>
+        </div>
+      );
+    }
+
+    const title =
+      pick(item, ["name", "title", "place", "label"]) || defaultTitleForSection(sectionKey);
+    const subtitle =
+      pick(item, [
+        "address",
+        "location",
+        "city",
+        "area",
+        "venue",
+        "neighborhood",
+      ]) || "";
+    const desc = pick(item, ["description", "summary", "details", "notes"]);
+    const rating = pick(item, ["rating", "stars"]);
+    const price = pick(item, ["price", "cost", "budget"]);
+    const category = pick(item, ["category", "type", "cuisine", "kind"]);
+    const time = pick(item, ["time", "startTime", "open", "when"]);
+    const image = pick(item, [
+      "image",
+      "imageUrl",
+      "imageURL",
+      "photo",
+      "thumbnail",
+      "cover",
+      "img",
+    ]);
+
+    return (
+      <div key={idx} className={styles.card}>
+        {image && (
+          <div className={styles.cardImage}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={image} alt={title} />
+          </div>
+        )}
+        <div className={styles.cardBody}>
+          <div className={styles.cardTitle}>{title}</div>
+          {subtitle && <div className={styles.cardSubtitle}>{subtitle}</div>}
+          <div className={styles.cardMetaRow}>
+            {rating && (
+              <span className={styles.badge}>
+                <FaStar /> {rating}
+              </span>
+            )}
+            {price && <span className={styles.badge}>₹ {price}</span>}
+            {category && <span className={styles.badge}>{category}</span>}
+            {time && <span className={styles.badge}>{time}</span>}
+          </div>
+          {desc && <p className={styles.cardDesc}>{desc}</p>}
+        </div>
+      </div>
+    );
+  };
+
+  const renderItinerary = (it) => {
+    // it could be array of days or object keyed by day
+    const days = Array.isArray(it) ? it : typeof it === "object" ? Object.entries(it).map(([k,v])=>({ day:k, items:v })) : [];
+    if (!days.length) return null;
+    return (
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
+          {renderIconForSection("itinerary")}
+          <h4>Itinerary</h4>
+        </div>
+        <div className={styles.dayList}>
+          {days.map((d, idx) => (
+            <div key={idx} className={styles.dayCard}>
+              <div className={styles.dayTitle}>{d.day || `Day ${idx + 1}`}</div>
+              <ul className={styles.dayItems}>
+                {asArray(d.items).map((x, i) => (
+                  <li key={i}>
+                    {typeof x === "object"
+                      ? pick(x, ["name", "title", "place"]) || "Activity"
+                      : String(x)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -128,16 +314,32 @@ const UpdateTrip = () => {
         {trip && (
           <div className={styles.tripInfo}>
             <h2>{trip.city}</h2>
-            <p>
-              {trip.checkIn} to {trip.checkOut}
-            </p>
-            <p>Budget: ₹{trip.budget?.toLocaleString()}</p>
-            <p>
-              Preferences:{" "}
-              {Array.isArray(trip.preference)
-                ? trip.preference.join(", ")
-                : trip.preference}
-            </p>
+            <div className={styles.infoGrid}>
+              <div className={styles.infoItem}>
+                <FaCalendarAlt />
+                <span>
+                  {trip.checkIn} – {trip.checkOut}
+                </span>
+              </div>
+              <div className={styles.infoItem}>
+                <FaWallet />
+                <span>₹{trip.budget?.toLocaleString()}</span>
+              </div>
+              <div className={styles.infoItem}>
+                <FaMapMarkerAlt />
+                <span>{trip.city}</span>
+              </div>
+            </div>
+            {trip.preference && (
+              <div className={styles.chipGroup}>
+                {(Array.isArray(trip.preference)
+                  ? trip.preference
+                  : String(trip.preference).split(',').map((s) => s.trim())
+                 ).filter(Boolean).map((pref, idx) => (
+                  <span className={styles.chip} key={idx}>{pref}</span>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -171,14 +373,35 @@ const UpdateTrip = () => {
           </form>
         </div>
 
-        {trip?.suggestions && (
-          <div className={styles.currentPlan}>
-            <h3>Current Trip Plan</h3>
-            <div className={styles.planContent}>
-              <pre>{JSON.stringify(trip.suggestions, null, 2)}</pre>
+        {trip?.suggestions && (() => {
+          const parsed = parseSuggestions(trip.suggestions);
+          const sections = toSections(parsed);
+          if (!sections.length) return null;
+          return (
+            <div className={styles.currentPlan}>
+              <h3>Current Trip Plan</h3>
+              {sections.map((sec, idx) => {
+                // special-case itinerary
+                if (sec.key.toLowerCase().includes("itinerary")) {
+                  return <React.Fragment key={idx}>{renderItinerary(sec.items)}</React.Fragment>;
+                }
+                const items = asArray(sec.items);
+                if (!items.length) return null;
+                return (
+                  <div key={idx} className={styles.section}>
+                    <div className={styles.sectionHeader}>
+                      {renderIconForSection(sec.key)}
+                      <h4>{sec.title}</h4>
+                    </div>
+                    <div className={styles.cardGrid}>
+                      {items.map((it, i) => renderCard(it, i, sec.key))}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
-        )}
+          );
+        })()}
       </div>
       <Footer />
     </>
