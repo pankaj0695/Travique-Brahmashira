@@ -6,6 +6,7 @@
   background: var(--bg-primary, #f8fafc);
   position: relative;
   overflow-x: auto;
+
   /* Theme-aware background patterns */
   background-image:
     radial-gradient(ellipse at 15% 85%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
@@ -16,19 +17,17 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Dashboard Header/Navbar with Main Site Theme */
 .header {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: var(--text-primary, #18181b);
-  padding: 1.5rem 0;
-  box-shadow: 
-    0 25px 50px rgba(56, 189, 248, 0.15),
-    0 10px 25px rgba(14, 165, 233, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  width: 100%;
-  position: relative;
-  overflow: hidden;
+  background-color: #e4dfda; /* Light Beige */
+  border-bottom: 1px solid #1282a2; /* Teal Blue border */
+  color: #8B372C; /* Maroon/Brown text */
+  padding: 1rem 0;
+  box-shadow: 0 2px 10px rgba(1, 29, 77, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
 }
 
 .header::before {
@@ -38,7 +37,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #22d3ee, #38bdf8, #0ea5e9);
+  background: linear-gradient(90deg, #1282a2, #034078, #1282a2);
   opacity: 1;
 }
 
@@ -55,72 +54,56 @@
   margin: 0;
   font-size: 2rem;
   font-weight: bold;
-  background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 50%, #0ea5e9 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #8B372C; /* Solid brown Dashboard title */
+  letter-spacing: 1px;
 }
 
+/* Admin info section */
 .adminInfo {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
+/* Admin role badge aligned with theme */
 .role {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #22d3ee;
+  border: 1px solid #4f0808; /* brown border */
+  color: #8B372C; /* brown text */
   padding: 0.4rem 1rem;
   border-radius: 50px;
   font-size: 0.9rem;
   font-weight: 600;
 }
 
+/* Logout button in theme */
 .logoutBtn {
-  background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 50%, #0ea5e9 100%);
-  color: #18181b;
-  border: 2px solid transparent;
-  border-radius: 50px;
+  background-color: #1282a2; /* Teal Blue */
+  color: #e4dfda; /* Light Beige text */
+  border: 2px solid #1282a2;
+  border-radius: 8px;
   padding: 0.6rem 1.2rem;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(34, 211, 238, 0.3);
-  transform: translateY(0);
-}
-
-.logoutBtn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.6s;
+  box-shadow: 0 4px 15px rgba(18, 130, 162, 0.3);
 }
 
 .logoutBtn:hover {
-  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #22d3ee 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(34, 211, 238, 0.4);
+  background-color: #034078; /* Deep Blue */
+  border-color: #034078;
 }
 
-.logoutBtn:hover::before {
-  left: 100%;
-}
-
+/* Content area */
 .content {
   width: 100%;
   margin: 0;
   padding: 2rem;
 }
 
+/* Tabs */
 .tabs {
   display: flex;
   gap: 1rem;
@@ -154,6 +137,7 @@
   box-shadow: 0 4px 15px rgba(34, 211, 238, 0.2);
 }
 
+/* Actions */
 .actions {
   margin-bottom: 2rem;
   display: flex;
@@ -161,7 +145,7 @@
 }
 
 .registerBtn {
-  background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 50%, #0ea5e9 100%);
+  background: linear-gradient(135deg, #8B372C 0%, #954b4b 50%, #816d6b 100%);
   color: white;
   border: none;
   border-radius: 50px;
@@ -195,6 +179,7 @@
   box-shadow: 0 12px 40px rgba(56, 189, 248, 0.25);
 }
 
+/* Table Styles */
 .tableContainer {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 25px;
@@ -210,13 +195,14 @@
 
 .tableContainer h2 {
   margin: 0;
+  color:#7b1111;
   padding: 1.5rem 2rem;
   background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 50%, #0ea5e9 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
   background-clip: text;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  font-weight: 700;
+  font-weight: 900;
   font-size: 1.5rem;
 }
 
@@ -238,7 +224,8 @@
 .table th {
   background: rgba(255, 255, 255, 0.2);
   font-weight: 600;
-  color: #22d3ee;
+  color: #8B372C;
+  font-weight: bold;
   text-transform: uppercase;
   font-size: 0.9rem;
   letter-spacing: 0.5px;
@@ -250,6 +237,7 @@
   transition: all 0.3s ease;
 }
 
+/* User image styling */
 .userImage {
   width: 40px;
   height: 40px;
@@ -260,7 +248,7 @@
 }
 
 .userImage:hover {
-  border-color: #22d3ee;
+  border-color: #032e35;
   transform: scale(1.1);
 }
 
@@ -278,8 +266,9 @@
   font-weight: 600;
 }
 
+/* Role badge colors */
 .roleBadge {
-  background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 100%);
+  background: linear-gradient(135deg, #04171a 0%, #0c6186 100%);
   color: white;
   padding: 0.4rem 1rem;
   border-radius: 50px;
@@ -295,6 +284,7 @@
   box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
+/* Loading state */
 .loading {
   display: flex;
   justify-content: center;
@@ -309,6 +299,7 @@
   font-weight: 600;
 }
 
+/* Error box */
 .error {
   background: rgba(248, 215, 218, 0.2);
   color: #721c24;
@@ -320,6 +311,7 @@
   box-shadow: 0 8px 32px rgba(248, 215, 218, 0.3);
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .headerContent {
     flex-direction: column;
