@@ -2,6 +2,10 @@
 
 # Travique – AI-Powered Personalized Travel Planning Platform
 
+[![Watch the demo video](Brahmashira-display-image.png)](https://drive.google.com/file/d/171V4FzA1v5djnuJkgBQvdabdNcU64KnW/view?usp=sharing)
+
+> Click the image above to watch the demonstration video on Google Drive.
+
 ### Team Brahmashira – Innovating travel planning with cutting-edge technology and intelligent automation.
 
 ## Team Members
