@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import TraviqueLogo from "../../../public/Travique-logo.png";
+import TraviqueLogo from "/Travique-logo.png";
 import { useUser } from "../../UserContext";
 
 const Navbar = () => {

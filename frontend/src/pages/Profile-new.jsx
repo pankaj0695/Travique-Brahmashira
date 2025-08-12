@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../UserContext";
+import { useUser } from "../UserContext";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
-import Footer from "../../components/Footer/Footer";
+import Footer from "../components/Footer/Footer";
 import styles from "./Profile.module.css";
 
 const Profile = () => {
